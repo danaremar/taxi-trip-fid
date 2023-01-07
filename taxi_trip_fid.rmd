@@ -1105,16 +1105,20 @@ plot(x = red_train$distance, y = red_train$trip_duration)
 -   **Bruno González Arenas**
 
     -   *Visualización*, *preprocesamiento*
+    -   Aprendizaje supervisado
 
 -   **Carlos González Arenas**
 
     -   *Visualización*, *preprocesamiento*
+
+    -   *Aprendizaje supervisado*
 
     -   BigML: documentación
 
 -   **Diego Monsalves Vázquez**
 
     -   *Visualización*, *preprocesamiento*
+    -   Aprendizaje supervisado
 
 ## Subgrupo 2 (aprendizaje no supervisado)
 
