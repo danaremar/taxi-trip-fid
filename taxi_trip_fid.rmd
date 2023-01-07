@@ -1,0 +1,1092 @@
+---
+title: "Taxi no supervisado"
+author: "Daniel Arellano Martínez, Bruno González Arenas, Carlos González Arenas, Víctor Manuel Vázquez García"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+# Introducción
+
+Los taxis de New York son una forma común de transporte en la ciudad. Están disponibles en toda la ciudad y pueden ser reconocidos por su característica pintura amarilla. Los conductores de taxis de Nueva York deben tener una licencia especial y una tarjeta de identificación, y los vehículos deben pasar inspecciones regulares para asegurar la seguridad de los pasajeros. Los pasajeros pueden solicitar un taxi en la calle, a través de una aplicación móvil o en una parada de taxi designada. Los taxis también pueden ser contratados para viajes más largos fuera de la ciudad.
+
+A continuación, se va a analizar un dataset sobre los trayectos de taxis que incluirá los siguientes datos:
+
+-   *id*: identifica a cada viaje
+
+-   *vendor_id*: identifica al proveedor que ofrece el servicio
+
+-   *pickup_datetime*: fecha y hora de recogida
+
+-   *dropoff_datetime*: fecha y hora de llegada
+
+-   *passenger_count*: número de pasajeros (incluyendo el conductor)
+
+-   *pickup_longitude*: longitud donde el pasajero es recogido
+
+-   *pickup_latitude*: latitud donde el pasajero es recogido
+
+-   *dropoff_longitude*: longitud donde el pasajero termina el trayecto
+
+-   *dropoff_latitude*: latitud donde el pasajero termina el trayecto
+
+-   *store_and_fwd_flag*: indica si ha perdido la conexión con el servidor y se ha almacenado localmente
+
+-   *trip_duration*: duración del viaje en segundos
+
+Este análisis del dataset de taxis de Nueva York se centrará en examinar las tendencias y patrones en el uso de los taxis en la ciudad. A través del análisis de datos como la ubicación y el tiempo de viaje, se espera obtener una mejor comprensión de cómo se utilizan los taxis en Nueva York y cómo pueden ser mejorados y optimizados para satisfacer las necesidades de los pasajeros y conductores.
+
+```{r}
+
+# importación de paquetes
+suppressPackageStartupMessages(library(dplyr))
+library(scales)
+library(geosphere)
+library(pryr)
+library(dendextend)
+library(ggplot2)
+library(NbClust)
+library(factoextra)
+library(dbscan)
+library(caret)
+library(tidyverse)
+library(lubridate)
+library(gridExtra)
+library("xgboost")
+
+```
+
+## Obtención de datos
+
+Este análisis del dataset de taxis de Nueva York se basa en datos extraídos de la plataforma [Kaggle](https://www.kaggle.com/competitions/nyc-taxi-trip-duration/data) en la sección de competiciones. Estos datos han sido descargados y tratados de forma local. Para ello se almacenan en la variable/dataset de R "train".
+
+```{r}
+
+# dataset de entrenamiento
+train <- read.csv("datos/train.csv")
+
+# representa el dataset de entrenamiento
+head(train)
+
+```
+
+```{r}
+
+# características básicas del dataset
+summary(train)
+
+```
+
+
+# Supervisado
+
+## Visualización
+
+Empezaremos visualizando cada una de las variables presentes en nuestro dataset, posteriormente realizaremos un preprocesamiento.
+
+Comenzaremos con vendor_id, esta variable indica el conductor que realizó el trayecto.
+
+Se puede observar que el taxista 2 dispone de más trayectos que el 1, pero la diferencia es insignificado en comparación a la cantidad de datos existentes.
+
+```{r}
+train %>%
+  mutate(vendor_id = factor(vendor_id)) %>%
+  ggplot(aes(vendor_id, fill = vendor_id)) +
+  geom_bar() +
+  scale_fill_manual(values=c("red", "darkblue")) +
+  labs(x = "Taxista", y = "Cantidad de trayectos realizados")
+```
+
+Continuamos con passenger_count, que indica la cantidad de personas que montaron en el taxi.
+
+Se puede observamos que la mayoría de trayectos unicamente transportaban una persona.
+
+```{r}
+train %>%
+  ggplot(aes(passenger_count)) +
+  geom_bar(fill = "#FF6666") +
+  labs(x = "Pasajeros", y = "Cantidad de trayectos realizados")
+```
+
+Ahora analizaremos la variable store_and_fwd_flag.
+
+La mayoría de los registros disponen de valor N, por tanto lo más probable es que esta columna sea eliminada ya que no aporta información al problema.
+
+```{r}
+train %>% 
+    ggplot(aes(store_and_fwd_flag)) +
+    geom_bar(fill = "#FF6666") +
+    labs(x = "Store and FWD Flash", y = "Cantidad de trayectos realizados")
+```
+
+En cuanto a las fechas y horas disponibles en nuestro dataset, vamos a trabajar solo sobre pickup_time ya que es la que aporta mayor información al problema.
+
+Vamos a observaremos la distribución de los trayectos respecto a los meses, las horas y los días de la semana.
+
+Nos podemos dar cuenta que nuestro dataset unicamente contiene viajes realizados entre enero y junio.
+
+Con estas tres gráficas se puede observar como en las horas de madrugada la cantidad de viajes baja, y en fin de semana el número sube.
+
+```{r}
+count_month <- train %>%
+  mutate(month_pick = month(pickup_datetime)) %>%
+  group_by(month_pick) %>%
+  count() %>%
+  ggplot(aes(month_pick, n)) +
+  geom_line(size = 1.5, color = "#FF6666") +
+  geom_point(size = 3) + 
+  labs(x = "Meses", y = "Cantidad de trayectos realizados")
+
+count_hour <- train %>%
+  mutate(hour_pick = hour(pickup_datetime)) %>%
+  group_by(hour_pick) %>%
+  count() %>%
+  ggplot(aes(hour_pick, n)) +
+  geom_line(size = 1.5, color = "blue") +
+  geom_point(size = 3) + 
+  labs(x = "Horas", y = "Cantidad de trayectos realizados")
+
+count_wday <- train %>%
+  mutate(week_day = wday(pickup_datetime, week_start = 1)) %>%
+  group_by(week_day) %>%
+  count() %>%
+  ggplot(aes(week_day, n)) +
+  geom_line(size = 1.5, color = "yellow") +
+  geom_point(size = 3) + 
+  labs(x = "Días de la semana", y = "Cantidad de trayectos realizados")
+
+grid.arrange(count_month, count_hour, count_wday, nrow = 2, ncol = 2)
+```
+
+Continuando con la columna pickup_datetime, vamos a ver como evoluciona la cantidad de trayectos cada mes según las horas y los días de la semana.
+
+```{r}
+month_hour <- train %>%
+  mutate(hour_pick = hour(pickup_datetime),
+         month_pick = factor(month(pickup_datetime, label = TRUE))) %>%
+  group_by(hour_pick, month_pick) %>%
+  count() %>%
+  ggplot(aes(hour_pick, n, color = month_pick)) +
+  geom_line(size = 1.5) +
+  labs(x = "Horas", y = "Cantidad de trayectos realizados")
+
+hour_wday <- train %>%
+  mutate(hour_pick = hour(pickup_datetime),
+         week_day = factor(wday(pickup_datetime, label = TRUE, week_start = 1))) %>%
+  group_by(hour_pick, week_day) %>%
+  count() %>%
+  ggplot(aes(hour_pick, n, color = week_day)) +
+  geom_line(size = 1.5) +
+  labs(x = "Día de la semana", y = "Cantidad de trayectos realizados")
+
+grid.arrange(month_hour, hour_wday, nrow = 2)
+```
+
+Un campo importante a la hora de visualizar es la distancia que existe entre el punto de recogida y destino.
+
+Vamos a crear dos nuevas columnas que contengan esta información. Crearemos una con la distancia euclídea y otra con la manhattan, y compararemos los resultados
+
+```{r}
+euclidean <- function(x1, x2, y1, y2) sqrt((x1 - y1)^2 + (x2 - y2)^2)
+manhattan <- function(x1, x2, y1, y2){
+    dist <- abs(x1-y1) + abs(x2-y2)
+    return(dist)
+}
+
+train <- train %>% mutate(distance_euclidean = euclidean(pickup_latitude, pickup_longitude, dropoff_latitude, dropoff_longitude),
+                                          distance_manhattan = manhattan(pickup_latitude, pickup_longitude, dropoff_latitude, dropoff_longitude))
+
+
+head(train, 5)
+```
+
+Si visualizamos ambas podemos ver que son muy similares, algo de esperar.
+
+Podemos apreciar que la mayoría de los trayectos tienen una distancia similar, aunque existen 2 puntos donde esta tendencia cambia.
+
+```{r}
+distancia1 <- train %>%
+  ggplot(aes(distance_euclidean)) +
+  geom_density(aes(y=after_stat(count)), color="darkblue", fill="darkblue") +
+  scale_x_log10() +
+  labs(x = "Distancia Euclídea", y = "Trayectos realizados")
+
+distancia2 <- train %>%
+  ggplot(aes(distance_manhattan)) +
+  geom_density(aes(y=after_stat(count)), color="red", fill="red") +
+  scale_x_log10() +
+  labs(x = "Distancia Manhattan", y = "Trayectos realizados")
+
+grid.arrange(distancia1, distancia2, nrow=1)
+```
+
+Si visualizamos las coordenadas de las sitios de recogida podemos observer la siguiente gráfica.
+
+```{r}
+train %>%
+  ggplot(aes(pickup_longitude, pickup_latitude)) +
+  geom_point(color='red') +
+  xlim(-75, -72.5) +
+  ylim(40, 42.5) +
+  labs(x = "Longitud", y = "Latitud")
+
+```
+
+Para finalizar con este punto vamos a ver información sobre nuestra columna objetivo, trip_duration.
+
+Empezaremos viendo la distribución de las duraciones de los trayectos. Como se puede observar el resultado es muy simular a una campana de Gauss.
+
+```{r}
+train %>%
+  ggplot(aes(trip_duration)) +
+  geom_density(aes(y=after_stat(count)), color="darkblue", fill="lightblue") +
+  scale_x_log10() +
+  labs(x = "Duración del trayecto", y = "Trayectos realizados")
+```
+
+Ahora analizaremos la media y la mediana de la duración de los viajes diferenciando por vendor/taxista.
+
+Se puede observar que la mediana de ambos es muy similar.
+
+```{r}
+dur_vendor_1 <- train %>%
+  group_by(vendor_id) %>%
+  summarise(mean_duration = mean(trip_duration)) %>%
+  ggplot(aes(x=vendor_id, y=mean_duration)) +
+  geom_col(position="dodge", color='red') +
+  labs(x = "Taxista", y = "Media")
+
+dur_vendor_2 <- train %>%
+  group_by(vendor_id) %>%
+  summarise(median_duration = median(trip_duration)) %>%
+  ggplot(aes(x=vendor_id, y=median_duration)) +
+  geom_col(position="dodge", color='blue') +
+  labs(x = "Taxista", y = "Mediana")
+
+grid.arrange(dur_vendor_1, dur_vendor_2, ncol=1)
+```
+
+Ahora visualizaremos la mediana de las duraciones de los viajes según el número de pasajeros.
+
+La primera gráfica nos muestra un número muy alto de duración de los viajes cuando el número de pasajeros en 0, y muy bajo cuando es 7, 8 y 9.
+
+Si miramos la siguiente tabla podemos ver que justamente esos casos disponen de muy pocos registros en el dataset y por tanto se pueden considerar como datos no válidos (posiblemente sean errores).
+
+Si ignoramos esa columna vemos que la duración de los trayectos respecto a la cantidad de pasajeros es parecido.
+
+```{r}
+train %>%
+  group_by(passenger_count) %>%
+  summarise(mean_duration = mean(trip_duration)) %>%
+  ggplot(aes(x=passenger_count, y=mean_duration, fill=mean_duration)) +
+  geom_col(position="dodge") +
+  labs(x = "Cantidad de pasajeros", y = "Mediana trip_duration")
+
+train %>%
+  group_by(passenger_count) %>%
+  count()
+```
+
+Continuamos con pickup_datetime. Vamos a ver como evoluciona la duración de los viajes según los meses, las horas, y los días de la semana.
+
+Aunque se observen picos la diferencia entre los valores es mínima.
+
+```{r}
+dur_month <- train %>%
+  mutate(month_pick = month(pickup_datetime)) %>%
+  group_by(month_pick) %>%
+  summarise(mean_duration = mean(trip_duration)) %>%
+  ggplot(aes(month_pick, mean_duration)) +
+  geom_line(size = 1.5, color = "#FF6666") +
+  geom_point(size = 3) + 
+  labs(x = "Meses", y = "Duración de trayectos realizados")
+
+dur_hour <- train %>%
+  mutate(hour_pick = hour(pickup_datetime)) %>%
+  group_by(hour_pick) %>%
+  summarise(mean_duration = mean(trip_duration)) %>%
+  ggplot(aes(hour_pick, mean_duration)) +
+  geom_line(size = 1.5, color = "blue") +
+  geom_point(size = 3) + 
+  labs(x = "Horas", y = "Duración de trayectos realizados")
+
+dur_wday <- train %>%
+  mutate(week_day = wday(pickup_datetime, week_start = 1)) %>%
+  group_by(week_day) %>%
+  summarise(mean_duration = mean(trip_duration)) %>%
+  ggplot(aes(week_day, mean_duration)) +
+  geom_line(size = 1.5, color = "yellow") +
+  geom_point(size = 3) + 
+  labs(x = "Días de la semana", y = "Duración de trayectos realizados")
+
+grid.arrange(dur_month, dur_hour, dur_wday, ncol = 2)
+```
+
+Para concluir con este apartado vamos a ver la distribución de las distancias respecto a la duración de los trayectos.
+
+Como se puede observar, ambas distancias generan una gráfica muy simular.
+
+Por tanto, no podemos decidir a simple vista que distancia mejorará los resultados de nuestra preducción.
+
+```{r}
+set.seed(2)
+dist_dur_1 <- train %>%
+  sample_n(5e4) %>%
+  ggplot(aes(distance_euclidean, trip_duration)) +
+  geom_point(color='red') +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x = "Distancia Euclídea", y = "Duración del trayecto")
+
+dist_dur_2 <- train %>%
+  sample_n(5e4) %>%
+  ggplot(aes(distance_manhattan, trip_duration)) +
+  geom_point(color='blue') +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x = "Distancia Manhattan", y = "Duración del trayecto")
+
+grid.arrange(dist_dur_1, dist_dur_2, ncol=2)
+```
+
+## Preprocesamiento
+
+Tras haber visualizado los datos podemos hacernos una idea de que datos debemos modificar/ajustar en nuestro dataset.
+
+Aun así comenzaremos viendo un resumen del dataset.
+
+```{r}
+summary(train)
+```
+
+Podemos observar que nuestro dataset no dispone de ningún dato nulo.
+
+Procederemos a eliminar la columna id, esta es generada aleatoriamente por lo que no aporta información.
+
+```{r}
+train <- select(train, -id)
+```
+
+La columna `vendor_id` se encuentra en formato númerico y por lo que hemos visto en el apartado anterior puede ser importante a la hora de predecir.
+
+La columna `dropoff_datetime` no aporta una información relevante al problema ya que es la suma de `pickup_datetime` y `trip_duration`.
+
+Procedemos a borrarla
+
+```{r}
+train <- train %>% select(-dropoff_datetime)
+```
+
+Sin embargo, la columna `pickup_datetime` si es importante, pero es necesario que realicemos un procesamiento ya que está en formato fecha.
+
+Vamos a dividir la columna en 3, mes, hora y día de la semana.
+
+```{r}
+train <- train %>% mutate(month = month(pickup_datetime))
+train <- train %>% mutate(hour = hour(pickup_datetime))
+train <- train %>% mutate(week_day = wday(pickup_datetime, week_start = 1))
+
+train <- train %>% select(-pickup_datetime)
+```
+
+La columna `passenger_count` se encuentra en formato númerico. Tal y como visualizamos en el anterior punto existian valores "raros" en esta columna.
+
+Vamos a eliminar todos los registros con `passenger_count` igual a 0, 7, 8 y 9.
+
+```{r}
+train <- train %>% filter(passenger_count != 0 & passenger_count != 7 & passenger_count != 8 & passenger_count != 9)
+```
+
+Las columnas `pickup_*` y `dropoff_*` continen las coordenadas. En el apartado anterior de visualización creamos dos columnas nuevas para mostrar la distancia entre el lugar de recogida y el destino.
+
+Por tanto, estas dos columnas no van a ser utilizas por lo que procedemos a borrarlas.
+
+```{r}
+train <- train %>% select(-pickup_latitude)
+train <- train %>% select(-pickup_longitude)
+train <- train %>% select(-dropoff_latitude)
+train <- train %>% select(-dropoff_longitude)
+```
+
+Sin embargo, las dos columnas que creamos anteriormente presentan registros con distancias igual a 0. Estas deben tratarse de errores por lo que procedemos con su eliminación.
+
+```{r}
+train <- train %>% filter(distance_euclidean != 0 & distance_manhattan != 0)
+```
+
+Continuando con la última variable, como hemos pudimos observar tanto en la visualización como con la función summary, la columna `store_and_fwd_flag` dispone de muy pocos valores de tipo Y, y por tanto no nos aporta información.
+
+Procedemos a borrarla.
+
+```{r}
+train <- train %>% select(-store_and_fwd_flag)
+```
+
+Para finalizar este apartado de preprocesamiento realizaremos un normalizado de nuestras columnas para que tengan un valor comprendido entre 0 y 1.
+
+```{r}
+range_model <- preProcess(train, method = "range")
+train <- predict(range_model, newdata = train)
+rm(range_model)
+```
+
+## Predicción
+
+## División del conjunto
+
+El primer paso es eliminar valores de nuestro dataset ya que debido a la cantidad de registros no es posible su computación.
+
+```{r}
+set.seed(123)
+ind <- createDataPartition(train$trip_duration, p = 0.001, list = FALSE)
+train <- train[ind,]
+rm(ind)
+```
+
+Ahora dividiremos nuestro conjunto en train y test.
+
+```{r}
+set.seed(456)
+ind <- createDataPartition(train$trip_duration, p = 0.7, list = FALSE)
+training_set <- train[ind,]
+test_set <- train[-ind,]
+rm(ind)
+```
+
+## Importancia de las variables
+
+Vamos a realizar un entrenamiento mediante Random Forest para observar cuales son las variables más importantes en nuestro dataset.
+
+Se observa que las distancias son las más importantes, superando la euclídea a la manhattan.
+
+No vamos a eliminar ninguna de estas variables del dataset ya que vamos a ir probando como se comportan los modelos con su eliminación.
+
+```{r}
+model_rf <- train(trip_duration ~ ., data = training_set, method = "rf")
+imp <- varImp(model_rf)
+plot(imp, main = "Importancia variables (Random Forest)")
+```
+
+## Entrenamiento
+
+Vamos a entrenar nuestros modelos con el dataset completo, ya preprocesado.
+
+Empezaremos utilizando regresión lineal.
+
+```{r}
+# Dividir conjunto de train y test en dos, uno con cada distancia.
+
+training_set_euclidean <- select(training_set, -distance_manhattan)
+training_set_manhattan <- select(training_set, -distance_euclidean)
+
+test_set_euclidean <- select(test_set, -distance_manhattan)
+test_set_manhattan <- select(test_set, -distance_euclidean)
+```
+
+Ahora entrenamos el modelo con ambos datos de train:
+
+```{r}
+model_lm_euclidean <- train(trip_duration ~ ., 
+                            data = training_set_euclidean, 
+                            method = "lm")
+predicted_lm_euclidean <- predict(model_lm_euclidean, 
+                                  select(test_set_euclidean, -trip_duration))
+
+postResample(predicted_lm_euclidean, test_set_euclidean$trip_duration)
+```
+
+```{r}
+model_lm_manhattan <- train(trip_duration ~ ., 
+                            data = training_set_manhattan, 
+                            method = "lm")
+predicted_lm_manhattan <- predict(model_lm_manhattan, 
+                                  select(test_set_manhattan, -trip_duration))
+
+postResample(predicted_lm_manhattan, test_set_manhattan$trip_duration)
+```
+
+```{r}
+resam <- resamples(list(EUC = model_lm_euclidean,
+                        MAN = model_lm_manhattan))
+summary(resam)
+```
+
+Se puede observar que ambos dan resultados muy parecidos, aun así la distancia euclídea da mejores resultados que la manhattan.
+
+Vamos a volver a entrenar ambos modelos pero ahora realizando ajuste en los hiperparámetros:
+
+```{r}
+lm_ctrl <- trainControl(
+  method = "repeatedcv",
+  number = 5,
+  repeats = 5,
+  search = "random"
+)
+
+model_lm_euclidean_ctrl <- train(trip_duration ~ ., 
+                            data = training_set_euclidean, 
+                            method = "lm",
+                            trControl = lm_ctrl,
+                            tuneLength = 10)
+
+predicted_lm_euclidean_ctrl <- predict(model_lm_euclidean, 
+                                  select(test_set_euclidean, -trip_duration))
+
+postResample(predicted_lm_euclidean_ctrl, test_set_euclidean$trip_duration)
+```
+
+```{r}
+model_lm_manhattan_ctrl <- train(trip_duration ~ ., 
+                            data = training_set_manhattan, 
+                            method = "lm",
+                            trControl = lm_ctrl,
+                            tuneLength = 10)
+
+predicted_lm_manhattan_ctrl <- predict(model_lm_manhattan, 
+                                  select(test_set_manhattan, -trip_duration))
+
+postResample(predicted_lm_manhattan_ctrl, test_set_manhattan$trip_duration)
+```
+
+```{r}
+resam <- resamples(list(EUC = model_lm_euclidean_ctrl,
+                        MAN = model_lm_manhattan_ctrl))
+summary(resam)
+```
+
+Con el ajuste de los hiperparámetros podemos ver como la distancia manhattan ha mejorado respecto a la euclídea.
+
+Procedemos a entrenar el modelo utilizando XGBoost
+
+```{r}
+
+training_set_factor <- map_df(training_set, function(columna) {
+  columna %>% 
+    as.factor() %>% 
+    as.numeric %>% 
+    { . - 1 }
+})
+
+test_set_factor <- map_df(test_set, function(columna) {
+  columna %>% 
+    as.factor() %>% 
+    as.numeric %>% 
+    { . - 1 }
+})
+
+train_matrix <- 
+  training_set_factor %>% 
+  select(-trip_duration) %>% 
+  as.matrix() %>% 
+  xgb.DMatrix(data = ., label = training_set_factor$trip_duration)
+
+test_matrix <- 
+  test_set_factor %>% 
+  select(-trip_duration) %>% 
+  as.matrix() %>% 
+  xgb.DMatrix(data = ., label = test_set_factor$trip_duration)
+
+param <- list(
+      booster = "gbtree",
+      objective="reg:linear",
+      eval_metric = "rmse",
+      max_depth = 4,
+      eta = 0.3,
+      subsample = 0.8,
+      colsample_bytree = 0.8
+      )
+
+set.seed(123)
+model_xgb <- xgboost(data = train_matrix,
+                     nrounds = 10,
+                     params = param,
+                     nthread = 2)
+
+
+predict_xgb <- predict(model_xgb, test_matrix)
+postResample(predict_xgb, test_set_factor$trip_duration)
+```
+
+Se puede observar que los resultados obtenidos son peores que con la regresión lineal.
+
+Después de varias pruebas ajustando los hiperparámetros, y utilizando validación cruzada, esos hiperparámetros son los que mejor resultado aportan.
+
+Para terminar con este modelo vamos a mostar una gráfica de la importancia que han tenido las distintas variables.
+
+```{r}
+xgb_imp_freq <- xgb.importance(feature_names = colnames(train_matrix), 
+                               model = model_xgb)
+xgb.plot.importance(xgb_imp_freq)
+```
+
+En puntos anteriores entrenamos un random forest para determinar la importancia de las variables.
+
+Vamos a observar que resultados aporta:
+
+```{r}
+predicted_rf <- predict(model_rf, 
+                          select(test_set, -trip_duration))
+
+postResample(predicted_rf, test_set$trip_duration)
+```
+
+Después de analizar los distintos modelos se llega a la conclusión de que el mejor modelo para este conjunto de datos es la regresión lineal utilizando la distancia Manhattan.
+
+
+
+
+
+
+# No supervisado
+
+## Transformación de datos
+
+La fase de transformación implica la modificación y limpieza de datos para que puedan ser utilizados posteriormente por el proceso DM (Data Mining).
+
+### Cálculo de distancia
+
+Se añade una columna en el dataset que represente la distancia entre el punto de recogida y el de llegada. Para ello, se usará la función de distancia Harvesine, una fórmula matemática utilizada para calcular la distancia en una superficie esférica (en este caso de la tierra) entre dos puntos geográficos (punto de recogida y punto de llegada). Estos datos vienen dados en metros.
+
+```{r}
+
+# calcular distancia Harversine
+train <- train %>%
+  mutate(distance = distHaversine(cbind(longitude = pickup_longitude, latitude = pickup_latitude), cbind(longitude = dropoff_longitude, latitude = dropoff_latitude)))
+
+# representa las caracterícticas de distancia
+summary(train$distance)
+
+```
+
+### Eliminación de datos
+
+Dado que el conjunto de datos es grande y existen columnas redundantes, se va a eliminar aquellas no relevantes para simplificar y mejorar la eficiencia del análisis.
+
+```{r}
+
+# eliminación columnas no relevantes
+train$id <- NULL
+train$vendor_id <- NULL
+train$passenger_count <- NULL
+train$pickup_datetime <- NULL
+train$dropoff_datetime <- NULL
+train$store_and_fwd_flag <- NULL
+train$pickup_longitude <- NULL
+train$pickup_latitude <- NULL
+train$dropoff_longitude <- NULL
+train$dropoff_latitude <- NULL
+
+# se representan el dataset train
+head(train)
+
+```
+
+### Datos imperfectos
+
+A continuación, se va a representar la distancia frente a la duración para visualizar si existen datos imperfectos.
+
+```{r}
+
+# REPRESENTACIÓN TODO DATASET -> tarda en cargar
+# plot(x = train$distance, y = train$trip_duration)
+
+# REPRESENTACIÓN ALEATORIA
+temp_train <- sample_n(train, 10000)
+plot(x = temp_train$distance, y = temp_train$trip_duration)
+rm(temp_train)
+
+```
+
+Tras la representación, puede apreciarse que existen datos aislados con distancias de hasta 80km y con una duración de 16'6 horas. Lo cual nos indica una incongruencia, ya que esta ciudad en su parte más ancha mide 13'4km.
+
+Por esta razón, se va a acotar tanto la duración como la distancia en unas cotas que representen gran parte del conjunto de los datos.
+
+Para la **duración**, se va a probar manualmente a acotar la duración con un intervalo máximo y mínimo. En este caso, se ha probado con el intervalo [10, 10.000] segundos, descartando solamente un 0.29% del total de los datos.
+
+```{r}
+
+# ACOTAR DURACIÓN
+
+summary(train$trip_duration)
+
+# acotamos duración máxima
+max_dur <- 10000
+lim_max_dur <- nrow(train %>% filter(trip_duration >= max_dur))
+sprintf("Límitando como máximo la duración a %ss -> eliminación %s elementos (%s%% del total)", max_dur, lim_max_dur, 100 * lim_max_dur / nrow(train))
+
+# acotamos duración mínima
+min_dur <- 10
+lim_min_dur <- nrow(train %>% filter(trip_duration <= min_dur))
+sprintf("Límitando como mínimo la duración a %ss -> eliminación %s elementos (%s%% del total)", min_dur, lim_min_dur, 100 * lim_min_dur / nrow(train))
+
+# aplicando ambas restricciones
+lim_dur <- nrow(train %>% filter(trip_duration <= min_dur | trip_duration >= max_dur)) # nolint
+sprintf("Límitando duración entre [%s, %s] -> eliminación %s elementos (%s%% del total)", min_dur, max_dur, lim_dur, 100 * lim_dur / nrow(train)) # nolint
+
+# descartamos aquellos que no cumplan restricciones
+train <- train %>% filter(trip_duration > min_dur & trip_duration < max_dur)
+rm(max_dur, lim_max_dur, min_dur, lim_min_dur, lim_dur)
+
+```
+
+Para la **distancia**, se va a probar manualmente a acotar la distancia con un intervalo máximo y mínimo. En este caso, se ha probado con el intervalo [10, 25.000] metros, descartando solamente un 0.58% del total de los datos (que ya han sido previamente filtrados en la duración.
+
+```{r}
+
+# ACOTAR DISTANCIA
+
+summary(train$distance)
+
+# acotamos distancia máxima
+max_dist <- 25000
+lim_max_dist <- nrow(train %>% filter(distance >= max_dist))
+sprintf("Límitando como máximo la distancia a %sm -> eliminación %s elementos (%s%% del total)", max_dist, lim_max_dist, 100 * lim_max_dist / nrow(train))
+
+# acotamos distancia mínima
+min_dist <- 10
+lim_min_dist <- nrow(train %>% filter(distance <= min_dist))
+sprintf("Límitando como mínimo la distancia a %sm -> eliminación %s elementos (%s%% del total)", min_dist, lim_min_dist, 100 * lim_min_dist / nrow(train))
+
+# aplicando ambas restricciones
+lim_dist <- nrow(train %>% filter(distance <= min_dist | distance >= max_dist))
+sprintf("Límitando distancia entre [%s, %s] -> eliminación %s elementos (%s%% del total)", min_dist, max_dist, lim_dist, 100 * lim_dist / nrow(train))
+
+# descartamos aquellos que no cumplan restricciones
+train <- train %>% filter(distance > min_dist & distance < max_dist)
+rm(max_dist, lim_max_dist, min_dist, lim_min_dist, lim_dist)
+
+```
+
+### Normalización de los datos
+
+Para que los datos dispongan de una distribución similar y estén en la misma escala se precisa realizar la normalización. Esta transformará tanto la duración como la distancia entre un **intervalo [0, 1]**.
+
+```{r}
+
+# normalización de duración
+train$trip_duration <- rescale(train$trip_duration)
+
+# normalización de distancia
+train$distance <- rescale(train$distance)
+
+# muestra el conjunto de entrenamiento
+head(train)
+
+```
+
+### Representación de datos
+
+Una vez se ha aplicado las distintas técnicas de transformación al dataset, se va a representar para identificar a simple vista si existen algunos datos incongruentes. Tras el análisis visual, se puede concretar que el dataset se encuentra preparado para su uso en el proceso de Data Mining.
+
+```{r}
+
+# REPRESENTACIÓN TODO DATASET -> tarda en cargar
+# plot(x = train$distance, y = train$trip_duration)
+
+# REPRESENTACIÓN ALEATORIA
+temp_train <- sample_n(train, 50000)
+plot(x = temp_train$distance, y = temp_train$trip_duration)
+rm(temp_train)
+
+```
+
+## Data Mining: Clustering
+
+Data Mining es el proceso de explorar y analizar grandes conjuntos de datos con el fin de descubrir patrones y relaciones ocultos. Dentro de este proceso, existen las técnicas de clustering, que son aquellas que se utilizan para agrupar datos similares en "clusters", conjuntos o grupos.
+
+En este caso, se va a aplicar clustering para identificar los distintos tipos de trayecto en función de la distancia y de la duración.
+
+### Clustering con K-means
+
+1.  **Obtener número óptimo de clusters**
+
+Se representa la compactación en relación con el número de clusters.
+
+```{r eval=FALSE}
+
+vector_compactacion <- 0
+for(i in 1:15) {
+  km_train_aux2 <- kmeans(train,center=i,nstar=20)
+  vector_compactacion[i] <- km_train_aux2$tot.withinss
+}
+
+par(mfrow = c(1,1)) 
+plot(1:15, vector_compactacion, type = "b", 
+     xlab = "Numero de clusters", 
+     ylab = "Compactacion")
+
+```
+
+Se determina que el número óptimo de clusters son 3, ya que a partir de ahí se estabiliza.
+
+2.  **Aplicar función kmeans**
+
+Se extrae los clusters mediante la técnica de k-means o k-medias.
+
+```{r}
+
+# división en clústeres
+km_train <- kmeans(train, center = 3, nstar = 20)
+
+# breve resumen resultados tras aplicar la técnica
+summary(km_train)
+
+```
+
+3.  **Representación de clústeres**
+
+Se representan los clústeres extraídos mediante k-means.
+
+```{r}
+
+# representación de los clusters
+ggplot(train, aes(x = distance, y = trip_duration, color = factor(km_train$cluster))) + geom_point()
+
+```
+
+### Clustering con árboles jerárquicos
+
+Son algoritmos que se basan en construir un dendograma de forma que se secciona por el número de clusters deseados.
+
+1.  **Calcular matriz de distancias**
+
+Este algoritmo usa la matriz de distancias para crear el dendograma, es por ello que en primera instancia será necesario obtener esta matriz.
+
+```{r eval=FALSE}
+
+points <- c(train$distance, train$trip_duration)
+dist_tree <- dist(points)
+rm(points)
+
+```
+
+Como se puede apreciar, la cantidad de datos para construir un dendograma es muy grande para los datos dados, concretamente de 31Tb de datos.
+
+```{r}
+
+# existen 1445848 registros
+nrow(train)
+
+```
+
+Dado que existen 1445848 elementos en el dataset, se va a reducir este número para crear una matriz de distancias que pueda ser analizada computacionalmente a día de hoy. Para ello, se ha extraido 20000 elementos de forma aleatoria del dataset para llevar a cabo esta tarea.
+
+```{r}
+
+# número de elementos
+# menor tamaño -> menor consumo de memoria y tiempo de CPU
+n_dataset <- 20000
+
+# reducción de los datos de forma aleatoria
+# ¡ADVERTENCIA! En cada ejecución se tomarán unos datos diferentes
+red_train <- sample_n(train, n_dataset)
+rm(n_dataset)
+
+# representar datos seleccionados
+plot(x = red_train$distance, y = red_train$trip_duration)
+
+```
+
+Se crea la matriz de distancias reducida con los 20k elementos. Aún así, esta matriz ocupa en memoria 1,5GB.
+
+```{r}
+
+# construcción de matriz de distancias
+dist_matrix <- dist(red_train)
+
+# obtener tamaño de matriz de distancias -> RAM
+format(object.size(dist_matrix), units = "GB")
+
+```
+
+2.  **Aplicar función hclust**
+
+Se aplica la función que permite extraer el agrupamiento jerárquico en un conjunto de datos.
+
+```{r}
+
+# aplicar hclust para obtener árbol
+hc <- hclust(dist_matrix)
+rm(dist_matrix)
+summary(hc)
+
+```
+
+3.  **Visualización del dendograma**
+
+Se representa el dendograma o árbol de clústeres. Como podrá observarse, el dendograma dispone de una gran cantidad de niveles debido a la cantidad de datos y sus posibles agrupaciones (20000 datos con una altura de 19999 niveles).
+
+```{r}
+
+plot(hc)
+
+```
+
+4.  **Obtener número óptimo de clusters**
+
+Una vez tenemos el dendograma, será necesario determinar cúantos números de clusters deseamos para cortar el dendograma. Para ello vamos a representar el TSS en relación al número de clusters, para así determinar la mejor opción de forma visual.
+
+Nota: esta función puede tardar varios minutos.
+
+```{r eval=FALSE}
+
+# representa WSS - K (nº de clusters)
+# computacionalmente complejo -> ~5 min
+fviz_nbclust(red_train, FUN = hcut, method = "wss")
+
+```
+
+Se ha optado por elegir 4 clusters, ya que a partir de este se estabiliza y no aporta más valor tener más clusters.
+
+5.  **Corte del dendograma**
+
+Se corta el dendograma en los 4 clusters que se han determinado previamente. Posteriormente se representa.
+
+```{r}
+
+# nº clusters seleccionados para corte dendograma
+k <- 4
+
+# dendograma cortado
+cut_dend <- cutree(hc, k = k)
+class_red_train <- mutate(red_train, cluster = cut_dend)
+rm(k, cut_dend, hc)
+head(class_red_train)
+
+```
+
+6.  **Representación de clusters**
+
+Se representan los clusteres para los puntos datos, tras el corte realizado en el dendograma.
+
+```{r}
+
+# representa dendograma cortado
+ggplot(class_red_train, aes(x = distance, y = trip_duration, color = factor(cluster))) + geom_point()
+
+```
+
+
+### Clustering basado en densidad
+
+
+1. **Matriz de distancias**
+
+Se obtiene la matriz de distancias de la misma forma que se realiza en el clustering jerárquico.
+
+```{r}
+
+# número de elementos
+# menor tamaño -> menor consumo de memoria y tiempo de CPU
+n_dataset <- 5000
+
+# reducción de los datos de forma aleatoria
+# ¡ADVERTENCIA! En cada ejecución se tomarán unos datos diferentes
+red_train <- sample_n(train, n_dataset)
+
+# representar datos seleccionados
+plot(x = red_train$distance, y = red_train$trip_duration)
+
+# construcción de matriz de distancias
+dist_matrix <- dist(red_train)
+
+# obtener tamaño de matriz de distancias -> RAM
+format(object.size(dist_matrix), units = "GB")
+
+```
+
+2. **Obtener EPS**
+Mediante la función kNNdist se puede determinar el EPS que se va a utilizar.
+```{r}
+
+# select number of clusters
+k <- 2
+
+# original function
+# kNNdistplot(dist_matrix, k)
+
+# custom function
+knn_dist <- sort(kNNdist(dist_matrix, k))
+plot(knn_dist, type = "l", ylab = paste(k, "-NN distance", sep = ""), xlab = "Points (sample) sorted by distance", ylim = c(0, 0.03))
+abline(h = .008, col = "red")
+
+```
+
+
+3. **Aplicar función dbscan**
+Se aplica la función dbscan para categorizar en los diferentes clusters.
+```{r}
+
+# minimum of points per cluster
+min_pts <- n_dataset / 100
+
+# eps: max. dist. entre 2 puntos para ser considerado vecino de otro
+eps <- 0.008
+
+# uso de la función dbscan
+set.seed(1234)
+db <- dbscan(dist_matrix, eps, min_pts)
+rm(n_dataset, min_pts)
+db
+```
+
+4.  **Representación de clusters**
+Se representan los diferentes clústeres extraídos mediante densidad.
+
+```{r}
+
+# representación de los clusters
+ggplot(red_train, aes(x = distance, y = trip_duration, color = factor(db$cluster))) + geom_point()
+
+```
+
+
+
+## Interpretación de los datos
+
+# AUX
+
+## Método de reducción de datos auxiliar
+
+Este método fue usado para intentar equilibrar la carga de datos del dataset, pero disponía del problema que indicaba mayor concentración de puntos justamente en el comienzo de cada uno de los segmentos de distancia.
+
+Consiste en segmentar los datos en 3 grupos (menores de 1500 metros, comprendidos entre 1500 y 3000 metros y mayores de 3000) y se obtendrán un subconjunto de estos de forma aleatoria de 1000 elementos. Posteriormente, estos 3 conjuntos se unirán entre sí para dar lugar al conjunto sobre el que se va a contruir el dendograma.
+
+```{r}
+
+# 1º conj.
+set1 <- sample_n(train %>% filter(distance <= 0.3), 1000)
+head(set1)
+summary(set1)
+
+# 2º conj.
+set2 <- sample_n(train %>% filter(distance > 0.3 & distance < 0.6), 1000)
+head(set2)
+summary(set2)
+
+# 3º conj.
+set3 <- sample_n(train %>% filter(distance >= 0.6), 1000)
+head(set3)
+summary(set3)
+
+# unir todos los conjuntos
+red_train <- rbind(set1, set2, set3)
+rm(set1, set2, set3)
+head(red_train)
+summary(red_train)
+
+```
+
+Se representa esta distribución.
+
+```{r}
+
+plot(x = red_train$distance, y = red_train$trip_duration)
+
+```
+
+# Bibliografía
+
+<https://www.datacamp.com/tutorial/hierarchical-clustering-R> 
+<https://uc-r.github.io/hc_clustering>
