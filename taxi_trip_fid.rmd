@@ -968,9 +968,9 @@ k <- 4
 
 # dendograma cortado
 cut_dend <- cutree(hc, k = k)
-class_red_train <- mutate(red_train, cluster = cut_dend)
+h_red_train <- mutate(red_train, cluster = cut_dend)
 rm(k, cut_dend, hc)
-head(class_red_train)
+head(h_red_train)
 
 ```
 
@@ -981,7 +981,7 @@ Se representan los clusteres para los puntos datos, tras el corte realizado en e
 ```{r}
 
 # representa dendograma cortado
-ggplot(class_red_train, aes(x = distance, y = trip_duration, color = factor(cluster))) + geom_point()
+ggplot(h_red_train, aes(x = distance, y = trip_duration, color = factor(cluster))) + geom_point()
 
 ```
 
@@ -1059,7 +1059,7 @@ ggplot(red_train, aes(x = distance, y = trip_duration, color = factor(db$cluster
 
 # Métodos auxiliares
 
-## Método de reducción de datos
+## Método de reducción de datos auxiliar
 
 Este método fue usado para intentar equilibrar la carga de datos del dataset, pero disponía del problema que indicaba mayor concentración de puntos justamente en el comienzo de cada uno de los segmentos de distancia.
 
