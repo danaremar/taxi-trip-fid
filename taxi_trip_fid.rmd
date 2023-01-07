@@ -1,5 +1,5 @@
 ---
-title: "Taxi no supervisado"
+title: "Analisis de los trayectos de taxis de NY"
 author: "Daniel Arellano Martínez, Bruno González Arenas, Carlos González Arenas, Diego Monsalves Vázquez y Víctor Manuel Vázquez García"
 output:
   pdf_document: default
@@ -1056,6 +1056,10 @@ ggplot(red_train, aes(x = distance, y = trip_duration, color = factor(db$cluster
 ```
 
 ## Interpretación de los datos
+
+Como hemos visto en los algoritmos anteriores, el número óptimo de clusteres que podemos crear son entorno a 3 y 4. Estos numeros son correctos, ya que coinciden con los que estabamos buscando. 
+
+Nos quedamos con un cluster de 3. Así tenemos un cluster para los viajes rápidos, medios y lentos respecto a la distancia y tiempo del recorrido de los diferentes taxis de Nueva York.
 
 # Métodos auxiliares
 
