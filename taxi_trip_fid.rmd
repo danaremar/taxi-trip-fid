@@ -1,6 +1,6 @@
 ---
 title: "Taxi no supervisado"
-author: "Daniel Arellano Martínez, Bruno González Arenas, Carlos González Arenas, Víctor Manuel Vázquez García"
+author: "Daniel Arellano Martínez, Bruno González Arenas, Carlos González Arenas, Diego Monsalves Vázquez y Víctor Manuel Vázquez García"
 output:
   pdf_document: default
   html_document:
@@ -78,10 +78,7 @@ summary(train)
 
 ```
 
-
-# Supervisado
-
-## Visualización
+# Visualización
 
 Empezaremos visualizando cada una de las variables presentes en nuestro dataset, posteriormente realizaremos un preprocesamiento.
 
@@ -134,8 +131,8 @@ count_month <- train %>%
   group_by(month_pick) %>%
   count() %>%
   ggplot(aes(month_pick, n)) +
-  geom_line(size = 1.5, color = "#FF6666") +
-  geom_point(size = 3) + 
+  geom_line(linewidth = 1.5, color = "#FF6666") +
+  geom_point(linewidth = 3) + 
   labs(x = "Meses", y = "Cantidad de trayectos realizados")
 
 count_hour <- train %>%
@@ -143,8 +140,8 @@ count_hour <- train %>%
   group_by(hour_pick) %>%
   count() %>%
   ggplot(aes(hour_pick, n)) +
-  geom_line(size = 1.5, color = "blue") +
-  geom_point(size = 3) + 
+  geom_line(linewidth = 1.5, color = "blue") +
+  geom_point(linewidth = 3) + 
   labs(x = "Horas", y = "Cantidad de trayectos realizados")
 
 count_wday <- train %>%
@@ -152,11 +149,13 @@ count_wday <- train %>%
   group_by(week_day) %>%
   count() %>%
   ggplot(aes(week_day, n)) +
-  geom_line(size = 1.5, color = "yellow") +
-  geom_point(size = 3) + 
+  geom_line(linewidth = 1.5, color = "yellow") +
+  geom_point(linewidth = 3) + 
   labs(x = "Días de la semana", y = "Cantidad de trayectos realizados")
 
 grid.arrange(count_month, count_hour, count_wday, nrow = 2, ncol = 2)
+
+rm(count_month, count_hour, count_wday)
 ```
 
 Continuando con la columna pickup_datetime, vamos a ver como evoluciona la cantidad de trayectos cada mes según las horas y los días de la semana.
@@ -181,6 +180,8 @@ hour_wday <- train %>%
   labs(x = "Día de la semana", y = "Cantidad de trayectos realizados")
 
 grid.arrange(month_hour, hour_wday, nrow = 2)
+
+rm(month_hour, hour_wday)
 ```
 
 Un campo importante a la hora de visualizar es la distancia que existe entre el punto de recogida y destino.
@@ -219,6 +220,8 @@ distancia2 <- train %>%
   labs(x = "Distancia Manhattan", y = "Trayectos realizados")
 
 grid.arrange(distancia1, distancia2, nrow=1)
+
+rm(distancia1, distancia2)
 ```
 
 Si visualizamos las coordenadas de las sitios de recogida podemos observer la siguiente gráfica.
@@ -265,6 +268,8 @@ dur_vendor_2 <- train %>%
   labs(x = "Taxista", y = "Mediana")
 
 grid.arrange(dur_vendor_1, dur_vendor_2, ncol=1)
+
+rm(dur_vendor_1, dur_vendor_2)
 ```
 
 Ahora visualizaremos la mediana de las duraciones de los viajes según el número de pasajeros.
@@ -321,6 +326,8 @@ dur_wday <- train %>%
   labs(x = "Días de la semana", y = "Duración de trayectos realizados")
 
 grid.arrange(dur_month, dur_hour, dur_wday, ncol = 2)
+
+rm(dur_month, dur_hour, dur_wday)
 ```
 
 Para concluir con este apartado vamos a ver la distribución de las distancias respecto a la duración de los trayectos.
@@ -348,9 +355,11 @@ dist_dur_2 <- train %>%
   labs(x = "Distancia Manhattan", y = "Duración del trayecto")
 
 grid.arrange(dist_dur_1, dist_dur_2, ncol=2)
+
+rm(dist_dur_1, dist_dur_2)
 ```
 
-## Preprocesamiento
+# Preprocesamiento
 
 Tras haber visualizado los datos podemos hacernos una idea de que datos debemos modificar/ajustar en nuestro dataset.
 
@@ -430,6 +439,8 @@ range_model <- preProcess(train, method = "range")
 train <- predict(range_model, newdata = train)
 rm(range_model)
 ```
+
+# Supervisado
 
 ## Predicción
 
@@ -633,10 +644,15 @@ postResample(predicted_rf, test_set$trip_duration)
 
 Después de analizar los distintos modelos se llega a la conclusión de que el mejor modelo para este conjunto de datos es la regresión lineal utilizando la distancia Manhattan.
 
+```{r}
 
+# eliminación de variables usadas en supervisado
+rm(list=ls())
 
+# recarga de datos
+train <- read.csv("datos/train.csv")
 
-
+```
 
 # No supervisado
 
@@ -647,6 +663,8 @@ La fase de transformación implica la modificación y limpieza de datos para que
 ### Cálculo de distancia
 
 Se añade una columna en el dataset que represente la distancia entre el punto de recogida y el de llegada. Para ello, se usará la función de distancia Harvesine, una fórmula matemática utilizada para calcular la distancia en una superficie esférica (en este caso de la tierra) entre dos puntos geográficos (punto de recogida y punto de llegada). Estos datos vienen dados en metros.
+
+Se ha decidido usar esta distancia porque mide distancias rectilíneas de forma similar a la euclídea (al menos para una superficie esférica como es el planeta Tierra), y esta distancia supuso la variable más importante en el apartado "*Preprocesamiento*".
 
 ```{r}
 
@@ -967,11 +985,9 @@ ggplot(class_red_train, aes(x = distance, y = trip_duration, color = factor(clus
 
 ```
 
-
 ### Clustering basado en densidad
 
-
-1. **Matriz de distancias**
+1.  **Matriz de distancias**
 
 Se obtiene la matriz de distancias de la misma forma que se realiza en el clustering jerárquico.
 
@@ -996,8 +1012,8 @@ format(object.size(dist_matrix), units = "GB")
 
 ```
 
-2. **Obtener EPS**
-Mediante la función kNNdist se puede determinar el EPS que se va a utilizar.
+2.  **Obtener EPS** Mediante la función kNNdist se puede determinar el EPS que se va a utilizar.
+
 ```{r}
 
 # select number of clusters
@@ -1013,9 +1029,8 @@ abline(h = .008, col = "red")
 
 ```
 
+3.  **Aplicar función dbscan** Se aplica la función dbscan para categorizar en los diferentes clusters.
 
-3. **Aplicar función dbscan**
-Se aplica la función dbscan para categorizar en los diferentes clusters.
 ```{r}
 
 # minimum of points per cluster
@@ -1031,8 +1046,7 @@ rm(n_dataset, min_pts)
 db
 ```
 
-4.  **Representación de clusters**
-Se representan los diferentes clústeres extraídos mediante densidad.
+4.  **Representación de clusters** Se representan los diferentes clústeres extraídos mediante densidad.
 
 ```{r}
 
@@ -1040,8 +1054,6 @@ Se representan los diferentes clústeres extraídos mediante densidad.
 ggplot(red_train, aes(x = distance, y = trip_duration, color = factor(db$cluster))) + geom_point()
 
 ```
-
-
 
 ## Interpretación de los datos
 
@@ -1086,7 +1098,44 @@ plot(x = red_train$distance, y = red_train$trip_duration)
 
 ```
 
+# Autores
+
+## Subgrupo 1 (aprendizaje supervisado)
+
+-   **Bruno González Arenas**
+
+    -   *Visualización*, *preprocesamiento*
+
+-   **Carlos González Arenas**
+
+    -   *Visualización*, *preprocesamiento*
+
+    -   BigML: documentación
+
+-   **Diego Monsalves Vázquez**
+
+    -   *Visualización*, *preprocesamiento*
+
+## Subgrupo 2 (aprendizaje no supervisado)
+
+-   **Daniel Arellano Martínez**
+
+    -   *Transformación de datos* en *algoritmos no supervisados*
+
+    -   *Clustering con árboles jerárquicos*
+
+    -   *Clustering basado en densidad*
+
+    -   Documentación: introducción, unificación de trabajo realizado por subgrupos.
+
+-   **Víctor Manuel Vázquez García**
+
+    -   *Transformación de datos* en *algoritmos no supervisados*
+
+    -   *Clustering con k-means*
+
 # Bibliografía
 
-<https://www.datacamp.com/tutorial/hierarchical-clustering-R> 
-<https://uc-r.github.io/hc_clustering>
+-   <https://www.datacamp.com/tutorial/hierarchical-clustering-R>
+
+-   <https://uc-r.github.io/hc_clustering>

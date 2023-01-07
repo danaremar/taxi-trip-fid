@@ -1,0 +1,2310 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Taxi no supervisado},
+  pdfauthor={Daniel Arellano Martínez, Bruno González Arenas, Carlos González Arenas, Víctor Manuel Vázquez García},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Taxi no supervisado}
+\author{Daniel Arellano Martínez, Bruno González Arenas, Carlos González
+Arenas, Víctor Manuel Vázquez García}
+\date{}
+
+\begin{document}
+\maketitle
+
+\hypertarget{introducciuxf3n}{%
+\section{Introducción}\label{introducciuxf3n}}
+
+Los taxis de New York son una forma común de transporte en la ciudad.
+Están disponibles en toda la ciudad y pueden ser reconocidos por su
+característica pintura amarilla. Los conductores de taxis de Nueva York
+deben tener una licencia especial y una tarjeta de identificación, y los
+vehículos deben pasar inspecciones regulares para asegurar la seguridad
+de los pasajeros. Los pasajeros pueden solicitar un taxi en la calle, a
+través de una aplicación móvil o en una parada de taxi designada. Los
+taxis también pueden ser contratados para viajes más largos fuera de la
+ciudad.
+
+A continuación, se va a analizar un dataset sobre los trayectos de taxis
+que incluirá los siguientes datos:
+
+\begin{itemize}
+\item
+  \emph{id}: identifica a cada viaje
+\item
+  \emph{vendor\_id}: identifica al proveedor que ofrece el servicio
+\item
+  \emph{pickup\_datetime}: fecha y hora de recogida
+\item
+  \emph{dropoff\_datetime}: fecha y hora de llegada
+\item
+  \emph{passenger\_count}: número de pasajeros (incluyendo el conductor)
+\item
+  \emph{pickup\_longitude}: longitud donde el pasajero es recogido
+\item
+  \emph{pickup\_latitude}: latitud donde el pasajero es recogido
+\item
+  \emph{dropoff\_longitude}: longitud donde el pasajero termina el
+  trayecto
+\item
+  \emph{dropoff\_latitude}: latitud donde el pasajero termina el
+  trayecto
+\item
+  \emph{store\_and\_fwd\_flag}: indica si ha perdido la conexión con el
+  servidor y se ha almacenado localmente
+\item
+  \emph{trip\_duration}: duración del viaje en segundos
+\end{itemize}
+
+Este análisis del dataset de taxis de Nueva York se centrará en examinar
+las tendencias y patrones en el uso de los taxis en la ciudad. A través
+del análisis de datos como la ubicación y el tiempo de viaje, se espera
+obtener una mejor comprensión de cómo se utilizan los taxis en Nueva
+York y cómo pueden ser mejorados y optimizados para satisfacer las
+necesidades de los pasajeros y conductores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# importación de paquetes}
+\FunctionTok{suppressPackageStartupMessages}\NormalTok{(}\FunctionTok{library}\NormalTok{(dplyr))}
+\FunctionTok{library}\NormalTok{(scales)}
+\FunctionTok{library}\NormalTok{(geosphere)}
+\FunctionTok{library}\NormalTok{(pryr)}
+\FunctionTok{library}\NormalTok{(dendextend)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ---------------------
+## Welcome to dendextend version 1.16.0
+## Type citation('dendextend') for how to cite the package.
+## 
+## Type browseVignettes(package = 'dendextend') for the package vignette.
+## The github page is: https://github.com/talgalili/dendextend/
+## 
+## Suggestions and bug-reports can be submitted at: https://github.com/talgalili/dendextend/issues
+## You may ask questions at stackoverflow, use the r and dendextend tags: 
+##   https://stackoverflow.com/questions/tagged/dendextend
+## 
+##  To suppress this message use:  suppressPackageStartupMessages(library(dendextend))
+## ---------------------
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dendextend'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     cutree
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(NbClust)}
+\FunctionTok{library}\NormalTok{(factoextra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dbscan)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dbscan'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     as.dendrogram
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+\end{verbatim}
+
+\begin{verbatim}
+## v tibble  3.1.8     v purrr   1.0.0
+## v tidyr   1.2.1     v stringr 1.5.0
+## v readr   2.1.3     v forcats 0.5.2
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x readr::col_factor() masks scales::col_factor()
+## x purrr::compose()    masks pryr::compose()
+## x purrr::discard()    masks scales::discard()
+## x dplyr::filter()     masks stats::filter()
+## x dplyr::lag()        masks stats::lag()
+## x purrr::lift()       masks caret::lift()
+## x purrr::partial()    masks pryr::partial()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lubridate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: timechange
+## 
+## Attaching package: 'lubridate'
+## 
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gridExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'gridExtra'
+## 
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"xgboost"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'xgboost'
+## 
+## The following object is masked from 'package:dplyr':
+## 
+##     slice
+\end{verbatim}
+
+\hypertarget{obtenciuxf3n-de-datos}{%
+\subsection{Obtención de datos}\label{obtenciuxf3n-de-datos}}
+
+Este análisis del dataset de taxis de Nueva York se basa en datos
+extraídos de la plataforma
+\href{https://www.kaggle.com/competitions/nyc-taxi-trip-duration/data}{Kaggle}
+en la sección de competiciones. Estos datos han sido descargados y
+tratados de forma local. Para ello se almacenan en la variable/dataset
+de R ``train''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# dataset de entrenamiento}
+\NormalTok{train }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"datos/train.csv"}\NormalTok{)}
+
+\CommentTok{\# representa el dataset de entrenamiento}
+\FunctionTok{head}\NormalTok{(train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          id vendor_id     pickup_datetime    dropoff_datetime passenger_count
+## 1 id2875421         2 2016-03-14 17:24:55 2016-03-14 17:32:30               1
+## 2 id2377394         1 2016-06-12 00:43:35 2016-06-12 00:54:38               1
+## 3 id3858529         2 2016-01-19 11:35:24 2016-01-19 12:10:48               1
+## 4 id3504673         2 2016-04-06 19:32:31 2016-04-06 19:39:40               1
+## 5 id2181028         2 2016-03-26 13:30:55 2016-03-26 13:38:10               1
+## 6 id0801584         2 2016-01-30 22:01:40 2016-01-30 22:09:03               6
+##   pickup_longitude pickup_latitude dropoff_longitude dropoff_latitude
+## 1        -73.98215        40.76794         -73.96463         40.76560
+## 2        -73.98042        40.73856         -73.99948         40.73115
+## 3        -73.97903        40.76394         -74.00533         40.71009
+## 4        -74.01004        40.71997         -74.01227         40.70672
+## 5        -73.97305        40.79321         -73.97292         40.78252
+## 6        -73.98286        40.74220         -73.99208         40.74918
+##   store_and_fwd_flag trip_duration
+## 1                  N           455
+## 2                  N           663
+## 3                  N          2124
+## 4                  N           429
+## 5                  N           435
+## 6                  N           443
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# características básicas del dataset}
+\FunctionTok{summary}\NormalTok{(train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       id              vendor_id     pickup_datetime    dropoff_datetime  
+##  Length:1458644     Min.   :1.000   Length:1458644     Length:1458644    
+##  Class :character   1st Qu.:1.000   Class :character   Class :character  
+##  Mode  :character   Median :2.000   Mode  :character   Mode  :character  
+##                     Mean   :1.535                                        
+##                     3rd Qu.:2.000                                        
+##                     Max.   :2.000                                        
+##  passenger_count pickup_longitude  pickup_latitude dropoff_longitude
+##  Min.   :0.000   Min.   :-121.93   Min.   :34.36   Min.   :-121.93  
+##  1st Qu.:1.000   1st Qu.: -73.99   1st Qu.:40.74   1st Qu.: -73.99  
+##  Median :1.000   Median : -73.98   Median :40.75   Median : -73.98  
+##  Mean   :1.665   Mean   : -73.97   Mean   :40.75   Mean   : -73.97  
+##  3rd Qu.:2.000   3rd Qu.: -73.97   3rd Qu.:40.77   3rd Qu.: -73.96  
+##  Max.   :9.000   Max.   : -61.34   Max.   :51.88   Max.   : -61.34  
+##  dropoff_latitude store_and_fwd_flag trip_duration    
+##  Min.   :32.18    Length:1458644     Min.   :      1  
+##  1st Qu.:40.74    Class :character   1st Qu.:    397  
+##  Median :40.75    Mode  :character   Median :    662  
+##  Mean   :40.75                       Mean   :    959  
+##  3rd Qu.:40.77                       3rd Qu.:   1075  
+##  Max.   :43.92                       Max.   :3526282
+\end{verbatim}
+
+\hypertarget{supervisado}{%
+\section{Supervisado}\label{supervisado}}
+
+\hypertarget{visualizaciuxf3n}{%
+\subsection{Visualización}\label{visualizaciuxf3n}}
+
+Empezaremos visualizando cada una de las variables presentes en nuestro
+dataset, posteriormente realizaremos un preprocesamiento.
+
+Comenzaremos con vendor\_id, esta variable indica el conductor que
+realizó el trayecto.
+
+Se puede observar que el taxista 2 dispone de más trayectos que el 1,
+pero la diferencia es insignificado en comparación a la cantidad de
+datos existentes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{vendor\_id =} \FunctionTok{factor}\NormalTok{(vendor\_id)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(vendor\_id, }\AttributeTok{fill =}\NormalTok{ vendor\_id)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\StringTok{"darkblue"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Taxista"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Cantidad de trayectos realizados"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+Continuamos con passenger\_count, que indica la cantidad de personas que
+montaron en el taxi.
+
+Se puede observamos que la mayoría de trayectos unicamente transportaban
+una persona.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(passenger\_count)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#FF6666"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Pasajeros"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Cantidad de trayectos realizados"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+Ahora analizaremos la variable store\_and\_fwd\_flag.
+
+La mayoría de los registros disponen de valor N, por tanto lo más
+probable es que esta columna sea eliminada ya que no aporta información
+al problema.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(store\_and\_fwd\_flag)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#FF6666"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Store and FWD Flash"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Cantidad de trayectos realizados"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+En cuanto a las fechas y horas disponibles en nuestro dataset, vamos a
+trabajar solo sobre pickup\_time ya que es la que aporta mayor
+información al problema.
+
+Vamos a observaremos la distribución de los trayectos respecto a los
+meses, las horas y los días de la semana.
+
+Nos podemos dar cuenta que nuestro dataset unicamente contiene viajes
+realizados entre enero y junio.
+
+Con estas tres gráficas se puede observar como en las horas de madrugada
+la cantidad de viajes baja, y en fin de semana el número sube.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{count\_month }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{month\_pick =} \FunctionTok{month}\NormalTok{(pickup\_datetime)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(month\_pick) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(month\_pick, n)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"\#FF6666"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{linewidth =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Meses"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Cantidad de trayectos realizados"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in geom_point(linewidth = 3): Ignoring unknown parameters: `linewidth`
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{count\_hour }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{hour\_pick =} \FunctionTok{hour}\NormalTok{(pickup\_datetime)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(hour\_pick) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(hour\_pick, n)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{linewidth =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Horas"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Cantidad de trayectos realizados"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in geom_point(linewidth = 3): Ignoring unknown parameters: `linewidth`
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{count\_wday }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{week\_day =} \FunctionTok{wday}\NormalTok{(pickup\_datetime, }\AttributeTok{week\_start =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(week\_day) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(week\_day, n)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"yellow"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{linewidth =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Días de la semana"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Cantidad de trayectos realizados"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in geom_point(linewidth = 3): Ignoring unknown parameters: `linewidth`
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grid.arrange}\NormalTok{(count\_month, count\_hour, count\_wday, }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(count\_month, count\_hour, count\_wday)}
+\end{Highlighting}
+\end{Shaded}
+
+Continuando con la columna pickup\_datetime, vamos a ver como evoluciona
+la cantidad de trayectos cada mes según las horas y los días de la
+semana.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{month\_hour }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{hour\_pick =} \FunctionTok{hour}\NormalTok{(pickup\_datetime),}
+         \AttributeTok{month\_pick =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{month}\NormalTok{(pickup\_datetime, }\AttributeTok{label =} \ConstantTok{TRUE}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(hour\_pick, month\_pick) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(hour\_pick, n, }\AttributeTok{color =}\NormalTok{ month\_pick)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Horas"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Cantidad de trayectos realizados"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## i Please use `linewidth` instead.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hour\_wday }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{hour\_pick =} \FunctionTok{hour}\NormalTok{(pickup\_datetime),}
+         \AttributeTok{week\_day =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{wday}\NormalTok{(pickup\_datetime, }\AttributeTok{label =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{week\_start =} \DecValTok{1}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(hour\_pick, week\_day) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(hour\_pick, n, }\AttributeTok{color =}\NormalTok{ week\_day)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Día de la semana"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Cantidad de trayectos realizados"}\NormalTok{)}
+
+\FunctionTok{grid.arrange}\NormalTok{(month\_hour, hour\_wday, }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(month\_hour, hour\_wday)}
+\end{Highlighting}
+\end{Shaded}
+
+Un campo importante a la hora de visualizar es la distancia que existe
+entre el punto de recogida y destino.
+
+Vamos a crear dos nuevas columnas que contengan esta información.
+Crearemos una con la distancia euclídea y otra con la manhattan, y
+compararemos los resultados
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{euclidean }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x1, x2, y1, y2) }\FunctionTok{sqrt}\NormalTok{((x1 }\SpecialCharTok{{-}}\NormalTok{ y1)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ (x2 }\SpecialCharTok{{-}}\NormalTok{ y2)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{manhattan }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x1, x2, y1, y2)\{}
+\NormalTok{    dist }\OtherTok{\textless{}{-}} \FunctionTok{abs}\NormalTok{(x1}\SpecialCharTok{{-}}\NormalTok{y1) }\SpecialCharTok{+} \FunctionTok{abs}\NormalTok{(x2}\SpecialCharTok{{-}}\NormalTok{y2)}
+    \FunctionTok{return}\NormalTok{(dist)}
+\NormalTok{\}}
+
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{distance\_euclidean =} \FunctionTok{euclidean}\NormalTok{(pickup\_latitude, pickup\_longitude, dropoff\_latitude, dropoff\_longitude),}
+                                          \AttributeTok{distance\_manhattan =} \FunctionTok{manhattan}\NormalTok{(pickup\_latitude, pickup\_longitude, dropoff\_latitude, dropoff\_longitude))}
+
+
+\FunctionTok{head}\NormalTok{(train, }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          id vendor_id     pickup_datetime    dropoff_datetime passenger_count
+## 1 id2875421         2 2016-03-14 17:24:55 2016-03-14 17:32:30               1
+## 2 id2377394         1 2016-06-12 00:43:35 2016-06-12 00:54:38               1
+## 3 id3858529         2 2016-01-19 11:35:24 2016-01-19 12:10:48               1
+## 4 id3504673         2 2016-04-06 19:32:31 2016-04-06 19:39:40               1
+## 5 id2181028         2 2016-03-26 13:30:55 2016-03-26 13:38:10               1
+##   pickup_longitude pickup_latitude dropoff_longitude dropoff_latitude
+## 1        -73.98215        40.76794         -73.96463         40.76560
+## 2        -73.98042        40.73856         -73.99948         40.73115
+## 3        -73.97903        40.76394         -74.00533         40.71009
+## 4        -74.01004        40.71997         -74.01227         40.70672
+## 5        -73.97305        40.79321         -73.97292         40.78252
+##   store_and_fwd_flag trip_duration distance_euclidean distance_manhattan
+## 1                  N           455         0.01767954         0.01985931
+## 2                  N           663         0.02045590         0.02647781
+## 3                  N          2124         0.05993380         0.08015823
+## 4                  N           429         0.01343821         0.01548004
+## 5                  N           435         0.01068957         0.01081848
+\end{verbatim}
+
+Si visualizamos ambas podemos ver que son muy similares, algo de
+esperar.
+
+Podemos apreciar que la mayoría de los trayectos tienen una distancia
+similar, aunque existen 2 puntos donde esta tendencia cambia.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{distancia1 }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(distance\_euclidean)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\FunctionTok{after\_stat}\NormalTok{(count)), }\AttributeTok{color=}\StringTok{"darkblue"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"darkblue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_log10}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Distancia Euclídea"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Trayectos realizados"}\NormalTok{)}
+
+\NormalTok{distancia2 }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(distance\_manhattan)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\FunctionTok{after\_stat}\NormalTok{(count)), }\AttributeTok{color=}\StringTok{"red"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_log10}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Distancia Manhattan"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Trayectos realizados"}\NormalTok{)}
+
+\FunctionTok{grid.arrange}\NormalTok{(distancia1, distancia2, }\AttributeTok{nrow=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Transformation introduced infinite values in continuous x-axis
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 5897 rows containing non-finite values (`stat_density()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Transformation introduced infinite values in continuous x-axis
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 5897 rows containing non-finite values (`stat_density()`).
+\end{verbatim}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(distancia1, distancia2)}
+\end{Highlighting}
+\end{Shaded}
+
+Si visualizamos las coordenadas de las sitios de recogida podemos
+observer la siguiente gráfica.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(pickup\_longitude, pickup\_latitude)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color=}\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{75}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{72.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{40}\NormalTok{, }\FloatTok{42.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Longitud"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Latitud"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 31 rows containing missing values (`geom_point()`).
+\end{verbatim}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+Para finalizar con este punto vamos a ver información sobre nuestra
+columna objetivo, trip\_duration.
+
+Empezaremos viendo la distribución de las duraciones de los trayectos.
+Como se puede observar el resultado es muy simular a una campana de
+Gauss.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(trip\_duration)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\FunctionTok{after\_stat}\NormalTok{(count)), }\AttributeTok{color=}\StringTok{"darkblue"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"lightblue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_log10}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Duración del trayecto"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Trayectos realizados"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+Ahora analizaremos la media y la mediana de la duración de los viajes
+diferenciando por vendor/taxista.
+
+Se puede observar que la mediana de ambos es muy similar.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dur\_vendor\_1 }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(vendor\_id) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_duration =} \FunctionTok{mean}\NormalTok{(trip\_duration)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{vendor\_id, }\AttributeTok{y=}\NormalTok{mean\_duration)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{, }\AttributeTok{color=}\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Taxista"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Media"}\NormalTok{)}
+
+\NormalTok{dur\_vendor\_2 }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(vendor\_id) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{median\_duration =} \FunctionTok{median}\NormalTok{(trip\_duration)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{vendor\_id, }\AttributeTok{y=}\NormalTok{median\_duration)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{, }\AttributeTok{color=}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Taxista"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mediana"}\NormalTok{)}
+
+\FunctionTok{grid.arrange}\NormalTok{(dur\_vendor\_1, dur\_vendor\_2, }\AttributeTok{ncol=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(dur\_vendor\_1, dur\_vendor\_2)}
+\end{Highlighting}
+\end{Shaded}
+
+Ahora visualizaremos la mediana de las duraciones de los viajes según el
+número de pasajeros.
+
+La primera gráfica nos muestra un número muy alto de duración de los
+viajes cuando el número de pasajeros en 0, y muy bajo cuando es 7, 8 y
+9.
+
+Si miramos la siguiente tabla podemos ver que justamente esos casos
+disponen de muy pocos registros en el dataset y por tanto se pueden
+considerar como datos no válidos (posiblemente sean errores).
+
+Si ignoramos esa columna vemos que la duración de los trayectos respecto
+a la cantidad de pasajeros es parecido.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(passenger\_count) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_duration =} \FunctionTok{mean}\NormalTok{(trip\_duration)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{passenger\_count, }\AttributeTok{y=}\NormalTok{mean\_duration, }\AttributeTok{fill=}\NormalTok{mean\_duration)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Cantidad de pasajeros"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mediana trip\_duration"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(passenger\_count) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 2
+## # Groups:   passenger_count [10]
+##    passenger_count       n
+##              <int>   <int>
+##  1               0      60
+##  2               1 1033540
+##  3               2  210318
+##  4               3   59896
+##  5               4   28404
+##  6               5   78088
+##  7               6   48333
+##  8               7       3
+##  9               8       1
+## 10               9       1
+\end{verbatim}
+
+Continuamos con pickup\_datetime. Vamos a ver como evoluciona la
+duración de los viajes según los meses, las horas, y los días de la
+semana.
+
+Aunque se observen picos la diferencia entre los valores es mínima.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dur\_month }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{month\_pick =} \FunctionTok{month}\NormalTok{(pickup\_datetime)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(month\_pick) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_duration =} \FunctionTok{mean}\NormalTok{(trip\_duration)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(month\_pick, mean\_duration)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"\#FF6666"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Meses"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Duración de trayectos realizados"}\NormalTok{)}
+
+\NormalTok{dur\_hour }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{hour\_pick =} \FunctionTok{hour}\NormalTok{(pickup\_datetime)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(hour\_pick) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_duration =} \FunctionTok{mean}\NormalTok{(trip\_duration)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(hour\_pick, mean\_duration)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Horas"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Duración de trayectos realizados"}\NormalTok{)}
+
+\NormalTok{dur\_wday }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{week\_day =} \FunctionTok{wday}\NormalTok{(pickup\_datetime, }\AttributeTok{week\_start =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(week\_day) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_duration =} \FunctionTok{mean}\NormalTok{(trip\_duration)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(week\_day, mean\_duration)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"yellow"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Días de la semana"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Duración de trayectos realizados"}\NormalTok{)}
+
+\FunctionTok{grid.arrange}\NormalTok{(dur\_month, dur\_hour, dur\_wday, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(dur\_month, dur\_hour, dur\_wday)}
+\end{Highlighting}
+\end{Shaded}
+
+Para concluir con este apartado vamos a ver la distribución de las
+distancias respecto a la duración de los trayectos.
+
+Como se puede observar, ambas distancias generan una gráfica muy
+simular.
+
+Por tanto, no podemos decidir a simple vista que distancia mejorará los
+resultados de nuestra preducción.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{dist\_dur\_1 }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{sample\_n}\NormalTok{(}\FloatTok{5e4}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(distance\_euclidean, trip\_duration)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color=}\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_log10}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_log10}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Distancia Euclídea"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Duración del trayecto"}\NormalTok{)}
+
+\NormalTok{dist\_dur\_2 }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{sample\_n}\NormalTok{(}\FloatTok{5e4}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(distance\_manhattan, trip\_duration)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color=}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_log10}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_log10}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Distancia Manhattan"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Duración del trayecto"}\NormalTok{)}
+
+\FunctionTok{grid.arrange}\NormalTok{(dist\_dur\_1, dist\_dur\_2, }\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Transformation introduced infinite values in continuous x-axis
+## Transformation introduced infinite values in continuous x-axis
+\end{verbatim}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(dist\_dur\_1, dist\_dur\_2)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{preprocesamiento}{%
+\subsection{Preprocesamiento}\label{preprocesamiento}}
+
+Tras haber visualizado los datos podemos hacernos una idea de que datos
+debemos modificar/ajustar en nuestro dataset.
+
+Aun así comenzaremos viendo un resumen del dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       id              vendor_id     pickup_datetime    dropoff_datetime  
+##  Length:1458644     Min.   :1.000   Length:1458644     Length:1458644    
+##  Class :character   1st Qu.:1.000   Class :character   Class :character  
+##  Mode  :character   Median :2.000   Mode  :character   Mode  :character  
+##                     Mean   :1.535                                        
+##                     3rd Qu.:2.000                                        
+##                     Max.   :2.000                                        
+##  passenger_count pickup_longitude  pickup_latitude dropoff_longitude
+##  Min.   :0.000   Min.   :-121.93   Min.   :34.36   Min.   :-121.93  
+##  1st Qu.:1.000   1st Qu.: -73.99   1st Qu.:40.74   1st Qu.: -73.99  
+##  Median :1.000   Median : -73.98   Median :40.75   Median : -73.98  
+##  Mean   :1.665   Mean   : -73.97   Mean   :40.75   Mean   : -73.97  
+##  3rd Qu.:2.000   3rd Qu.: -73.97   3rd Qu.:40.77   3rd Qu.: -73.96  
+##  Max.   :9.000   Max.   : -61.34   Max.   :51.88   Max.   : -61.34  
+##  dropoff_latitude store_and_fwd_flag trip_duration     distance_euclidean
+##  Min.   :32.18    Length:1458644     Min.   :      1   Min.   : 0.00000  
+##  1st Qu.:40.74    Class :character   1st Qu.:    397   1st Qu.: 0.01258  
+##  Median :40.75    Mode  :character   Median :    662   Median : 0.02122  
+##  Mean   :40.75                       Mean   :    959   Mean   : 0.03548  
+##  3rd Qu.:40.77                       3rd Qu.:   1075   3rd Qu.: 0.03841  
+##  Max.   :43.92                       Max.   :3526282   Max.   :11.19260  
+##  distance_manhattan
+##  Min.   : 0.00000  
+##  1st Qu.: 0.01609  
+##  Median : 0.02738  
+##  Mean   : 0.04590  
+##  3rd Qu.: 0.05048  
+##  Max.   :12.90774
+\end{verbatim}
+
+Podemos observar que nuestro dataset no dispone de ningún dato nulo.
+
+Procederemos a eliminar la columna id, esta es generada aleatoriamente
+por lo que no aporta información.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(train, }\SpecialCharTok{{-}}\NormalTok{id)}
+\end{Highlighting}
+\end{Shaded}
+
+La columna \texttt{vendor\_id} se encuentra en formato númerico y por lo
+que hemos visto en el apartado anterior puede ser importante a la hora
+de predecir.
+
+La columna \texttt{dropoff\_datetime} no aporta una información
+relevante al problema ya que es la suma de \texttt{pickup\_datetime} y
+\texttt{trip\_duration}.
+
+Procedemos a borrarla
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{dropoff\_datetime)}
+\end{Highlighting}
+\end{Shaded}
+
+Sin embargo, la columna \texttt{pickup\_datetime} si es importante, pero
+es necesario que realicemos un procesamiento ya que está en formato
+fecha.
+
+Vamos a dividir la columna en 3, mes, hora y día de la semana.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{month =} \FunctionTok{month}\NormalTok{(pickup\_datetime))}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{hour =} \FunctionTok{hour}\NormalTok{(pickup\_datetime))}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{week\_day =} \FunctionTok{wday}\NormalTok{(pickup\_datetime, }\AttributeTok{week\_start =} \DecValTok{1}\NormalTok{))}
+
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{pickup\_datetime)}
+\end{Highlighting}
+\end{Shaded}
+
+La columna \texttt{passenger\_count} se encuentra en formato númerico.
+Tal y como visualizamos en el anterior punto existian valores ``raros''
+en esta columna.
+
+Vamos a eliminar todos los registros con \texttt{passenger\_count} igual
+a 0, 7, 8 y 9.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(passenger\_count }\SpecialCharTok{!=} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{ passenger\_count }\SpecialCharTok{!=} \DecValTok{7} \SpecialCharTok{\&}\NormalTok{ passenger\_count }\SpecialCharTok{!=} \DecValTok{8} \SpecialCharTok{\&}\NormalTok{ passenger\_count }\SpecialCharTok{!=} \DecValTok{9}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Las columnas \texttt{pickup\_*} y \texttt{dropoff\_*} continen las
+coordenadas. En el apartado anterior de visualización creamos dos
+columnas nuevas para mostrar la distancia entre el lugar de recogida y
+el destino.
+
+Por tanto, estas dos columnas no van a ser utilizas por lo que
+procedemos a borrarlas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{pickup\_latitude)}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{pickup\_longitude)}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{dropoff\_latitude)}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{dropoff\_longitude)}
+\end{Highlighting}
+\end{Shaded}
+
+Sin embargo, las dos columnas que creamos anteriormente presentan
+registros con distancias igual a 0. Estas deben tratarse de errores por
+lo que procedemos con su eliminación.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(distance\_euclidean }\SpecialCharTok{!=} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{ distance\_manhattan }\SpecialCharTok{!=} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Continuando con la última variable, como hemos pudimos observar tanto en
+la visualización como con la función summary, la columna
+\texttt{store\_and\_fwd\_flag} dispone de muy pocos valores de tipo Y, y
+por tanto no nos aporta información.
+
+Procedemos a borrarla.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{store\_and\_fwd\_flag)}
+\end{Highlighting}
+\end{Shaded}
+
+Para finalizar este apartado de preprocesamiento realizaremos un
+normalizado de nuestras columnas para que tengan un valor comprendido
+entre 0 y 1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{range\_model }\OtherTok{\textless{}{-}} \FunctionTok{preProcess}\NormalTok{(train, }\AttributeTok{method =} \StringTok{"range"}\NormalTok{)}
+\NormalTok{train }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(range\_model, }\AttributeTok{newdata =}\NormalTok{ train)}
+\FunctionTok{rm}\NormalTok{(range\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{predicciuxf3n}{%
+\subsection{Predicción}\label{predicciuxf3n}}
+
+\hypertarget{divisiuxf3n-del-conjunto}{%
+\subsection{División del conjunto}\label{divisiuxf3n-del-conjunto}}
+
+El primer paso es eliminar valores de nuestro dataset ya que debido a la
+cantidad de registros no es posible su computación.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{ind }\OtherTok{\textless{}{-}} \FunctionTok{createDataPartition}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{trip\_duration, }\AttributeTok{p =} \FloatTok{0.001}\NormalTok{, }\AttributeTok{list =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train[ind,]}
+\FunctionTok{rm}\NormalTok{(ind)}
+\end{Highlighting}
+\end{Shaded}
+
+Ahora dividiremos nuestro conjunto en train y test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{456}\NormalTok{)}
+\NormalTok{ind }\OtherTok{\textless{}{-}} \FunctionTok{createDataPartition}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{trip\_duration, }\AttributeTok{p =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{list =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{training\_set }\OtherTok{\textless{}{-}}\NormalTok{ train[ind,]}
+\NormalTok{test\_set }\OtherTok{\textless{}{-}}\NormalTok{ train[}\SpecialCharTok{{-}}\NormalTok{ind,]}
+\FunctionTok{rm}\NormalTok{(ind)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{importancia-de-las-variables}{%
+\subsection{Importancia de las
+variables}\label{importancia-de-las-variables}}
+
+Vamos a realizar un entrenamiento mediante Random Forest para observar
+cuales son las variables más importantes en nuestro dataset.
+
+Se observa que las distancias son las más importantes, superando la
+euclídea a la manhattan.
+
+No vamos a eliminar ninguna de estas variables del dataset ya que vamos
+a ir probando como se comportan los modelos con su eliminación.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_rf }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(trip\_duration }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training\_set, }\AttributeTok{method =} \StringTok{"rf"}\NormalTok{)}
+\NormalTok{imp }\OtherTok{\textless{}{-}} \FunctionTok{varImp}\NormalTok{(model\_rf)}
+\FunctionTok{plot}\NormalTok{(imp, }\AttributeTok{main =} \StringTok{"Importancia variables (Random Forest)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+\hypertarget{entrenamiento}{%
+\subsection{Entrenamiento}\label{entrenamiento}}
+
+Vamos a entrenar nuestros modelos con el dataset completo, ya
+preprocesado.
+
+Empezaremos utilizando regresión lineal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Dividir conjunto de train y test en dos, uno con cada distancia.}
+
+\NormalTok{training\_set\_euclidean }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(training\_set, }\SpecialCharTok{{-}}\NormalTok{distance\_manhattan)}
+\NormalTok{training\_set\_manhattan }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(training\_set, }\SpecialCharTok{{-}}\NormalTok{distance\_euclidean)}
+
+\NormalTok{test\_set\_euclidean }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(test\_set, }\SpecialCharTok{{-}}\NormalTok{distance\_manhattan)}
+\NormalTok{test\_set\_manhattan }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(test\_set, }\SpecialCharTok{{-}}\NormalTok{distance\_euclidean)}
+\end{Highlighting}
+\end{Shaded}
+
+Ahora entrenamos el modelo con ambos datos de train:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_lm\_euclidean }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(trip\_duration }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }
+                            \AttributeTok{data =}\NormalTok{ training\_set\_euclidean, }
+                            \AttributeTok{method =} \StringTok{"lm"}\NormalTok{)}
+\NormalTok{predicted\_lm\_euclidean }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(model\_lm\_euclidean, }
+                                  \FunctionTok{select}\NormalTok{(test\_set\_euclidean, }\SpecialCharTok{{-}}\NormalTok{trip\_duration))}
+
+\FunctionTok{postResample}\NormalTok{(predicted\_lm\_euclidean, test\_set\_euclidean}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         RMSE     Rsquared          MAE 
+## 0.0001128188 0.5936826823 0.0000828220
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_lm\_manhattan }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(trip\_duration }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }
+                            \AttributeTok{data =}\NormalTok{ training\_set\_manhattan, }
+                            \AttributeTok{method =} \StringTok{"lm"}\NormalTok{)}
+\NormalTok{predicted\_lm\_manhattan }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(model\_lm\_manhattan, }
+                                  \FunctionTok{select}\NormalTok{(test\_set\_manhattan, }\SpecialCharTok{{-}}\NormalTok{trip\_duration))}
+
+\FunctionTok{postResample}\NormalTok{(predicted\_lm\_manhattan, test\_set\_manhattan}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         RMSE     Rsquared          MAE 
+## 0.0001127156 0.5929620046 0.0000825294
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resam }\OtherTok{\textless{}{-}} \FunctionTok{resamples}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{EUC =}\NormalTok{ model\_lm\_euclidean,}
+                        \AttributeTok{MAN =}\NormalTok{ model\_lm\_manhattan))}
+\FunctionTok{summary}\NormalTok{(resam)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## summary.resamples(object = resam)
+## 
+## Models: EUC, MAN 
+## Number of resamples: 25 
+## 
+## MAE 
+##             Min.      1st Qu.       Median         Mean      3rd Qu.
+## EUC 7.470956e-05 7.934337e-05 8.173332e-05 8.183042e-05 8.430475e-05
+## MAN 7.751571e-05 8.091833e-05 8.244996e-05 8.268354e-05 8.392152e-05
+##             Max. NA's
+## EUC 8.893851e-05    0
+## MAN 9.077866e-05    0
+## 
+## RMSE 
+##             Min.      1st Qu.       Median         Mean      3rd Qu.
+## EUC 9.908712e-05 0.0001131512 0.0001202717 0.0001203689 0.0001312543
+## MAN 1.090085e-04 0.0001145401 0.0001225887 0.0001221160 0.0001269971
+##             Max. NA's
+## EUC 0.0001383157    0
+## MAN 0.0001435306    0
+## 
+## Rsquared 
+##          Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+## EUC 0.5414675 0.5949269 0.6294260 0.6225607 0.6446965 0.7064989    0
+## MAN 0.5158429 0.5884741 0.6139354 0.6133371 0.6589657 0.6885963    0
+\end{verbatim}
+
+Se puede observar que ambos dan resultados muy parecidos, aun así la
+distancia euclídea da mejores resultados que la manhattan.
+
+Vamos a volver a entrenar ambos modelos pero ahora realizando ajuste en
+los hiperparámetros:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{trainControl}\NormalTok{(}
+  \AttributeTok{method =} \StringTok{"repeatedcv"}\NormalTok{,}
+  \AttributeTok{number =} \DecValTok{5}\NormalTok{,}
+  \AttributeTok{repeats =} \DecValTok{5}\NormalTok{,}
+  \AttributeTok{search =} \StringTok{"random"}
+\NormalTok{)}
+
+\NormalTok{model\_lm\_euclidean\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(trip\_duration }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }
+                            \AttributeTok{data =}\NormalTok{ training\_set\_euclidean, }
+                            \AttributeTok{method =} \StringTok{"lm"}\NormalTok{,}
+                            \AttributeTok{trControl =}\NormalTok{ lm\_ctrl,}
+                            \AttributeTok{tuneLength =} \DecValTok{10}\NormalTok{)}
+
+\NormalTok{predicted\_lm\_euclidean\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(model\_lm\_euclidean, }
+                                  \FunctionTok{select}\NormalTok{(test\_set\_euclidean, }\SpecialCharTok{{-}}\NormalTok{trip\_duration))}
+
+\FunctionTok{postResample}\NormalTok{(predicted\_lm\_euclidean\_ctrl, test\_set\_euclidean}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         RMSE     Rsquared          MAE 
+## 0.0001128188 0.5936826823 0.0000828220
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_lm\_manhattan\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(trip\_duration }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }
+                            \AttributeTok{data =}\NormalTok{ training\_set\_manhattan, }
+                            \AttributeTok{method =} \StringTok{"lm"}\NormalTok{,}
+                            \AttributeTok{trControl =}\NormalTok{ lm\_ctrl,}
+                            \AttributeTok{tuneLength =} \DecValTok{10}\NormalTok{)}
+
+\NormalTok{predicted\_lm\_manhattan\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(model\_lm\_manhattan, }
+                                  \FunctionTok{select}\NormalTok{(test\_set\_manhattan, }\SpecialCharTok{{-}}\NormalTok{trip\_duration))}
+
+\FunctionTok{postResample}\NormalTok{(predicted\_lm\_manhattan\_ctrl, test\_set\_manhattan}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         RMSE     Rsquared          MAE 
+## 0.0001127156 0.5929620046 0.0000825294
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resam }\OtherTok{\textless{}{-}} \FunctionTok{resamples}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{EUC =}\NormalTok{ model\_lm\_euclidean\_ctrl,}
+                        \AttributeTok{MAN =}\NormalTok{ model\_lm\_manhattan\_ctrl))}
+\FunctionTok{summary}\NormalTok{(resam)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## summary.resamples(object = resam)
+## 
+## Models: EUC, MAN 
+## Number of resamples: 25 
+## 
+## MAE 
+##             Min.      1st Qu.       Median         Mean      3rd Qu.
+## EUC 7.270360e-05 7.802745e-05 8.044021e-05 8.115232e-05 8.560012e-05
+## MAN 6.970988e-05 7.891683e-05 8.269996e-05 8.220356e-05 8.556611e-05
+##             Max. NA's
+## EUC 9.128758e-05    0
+## MAN 9.092459e-05    0
+## 
+## RMSE 
+##             Min.      1st Qu.       Median         Mean      3rd Qu.
+## EUC 9.443334e-05 0.0001081502 0.0001171875 0.0001171842 0.0001276460
+## MAN 9.444028e-05 0.0001051338 0.0001202042 0.0001189592 0.0001302339
+##            Max. NA's
+## EUC 0.000138404    0
+## MAN 0.000152033    0
+## 
+## Rsquared 
+##          Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+## EUC 0.5354619 0.5739745 0.6143498 0.6206134 0.6779628 0.6950297    0
+## MAN 0.3758607 0.5472309 0.6237546 0.6090115 0.6766204 0.7409798    0
+\end{verbatim}
+
+Con el ajuste de los hiperparámetros podemos ver como la distancia
+manhattan ha mejorado respecto a la euclídea.
+
+Procedemos a entrenar el modelo utilizando XGBoost
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{training\_set\_factor }\OtherTok{\textless{}{-}} \FunctionTok{map\_df}\NormalTok{(training\_set, }\ControlFlowTok{function}\NormalTok{(columna) \{}
+\NormalTok{  columna }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{as.factor}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{    as.numeric }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{    \{ . }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{ \}}
+\NormalTok{\})}
+
+\NormalTok{test\_set\_factor }\OtherTok{\textless{}{-}} \FunctionTok{map\_df}\NormalTok{(test\_set, }\ControlFlowTok{function}\NormalTok{(columna) \{}
+\NormalTok{  columna }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{as.factor}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{    as.numeric }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{    \{ . }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{ \}}
+\NormalTok{\})}
+
+\NormalTok{train\_matrix }\OtherTok{\textless{}{-}} 
+\NormalTok{  training\_set\_factor }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{trip\_duration) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.matrix}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{xgb.DMatrix}\NormalTok{(}\AttributeTok{data =}\NormalTok{ ., }\AttributeTok{label =}\NormalTok{ training\_set\_factor}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+
+\NormalTok{test\_matrix }\OtherTok{\textless{}{-}} 
+\NormalTok{  test\_set\_factor }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{trip\_duration) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.matrix}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{xgb.DMatrix}\NormalTok{(}\AttributeTok{data =}\NormalTok{ ., }\AttributeTok{label =}\NormalTok{ test\_set\_factor}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+
+\NormalTok{param }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+      \AttributeTok{booster =} \StringTok{"gbtree"}\NormalTok{,}
+      \AttributeTok{objective=}\StringTok{"reg:linear"}\NormalTok{,}
+      \AttributeTok{eval\_metric =} \StringTok{"rmse"}\NormalTok{,}
+      \AttributeTok{max\_depth =} \DecValTok{4}\NormalTok{,}
+      \AttributeTok{eta =} \FloatTok{0.3}\NormalTok{,}
+      \AttributeTok{subsample =} \FloatTok{0.8}\NormalTok{,}
+      \AttributeTok{colsample\_bytree =} \FloatTok{0.8}
+\NormalTok{      )}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{model\_xgb }\OtherTok{\textless{}{-}} \FunctionTok{xgboost}\NormalTok{(}\AttributeTok{data =}\NormalTok{ train\_matrix,}
+                     \AttributeTok{nrounds =} \DecValTok{10}\NormalTok{,}
+                     \AttributeTok{params =}\NormalTok{ param,}
+                     \AttributeTok{nthread =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [17:40:03] WARNING: amalgamation/../src/objective/regression_obj.cu:203: reg:linear is now deprecated in favor of reg:squarederror.
+## [1]  train-rmse:303.883722 
+## [2]  train-rmse:229.012598 
+## [3]  train-rmse:180.576932 
+## [4]  train-rmse:150.687317 
+## [5]  train-rmse:130.740838 
+## [6]  train-rmse:119.400281 
+## [7]  train-rmse:112.800194 
+## [8]  train-rmse:108.174040 
+## [9]  train-rmse:105.209131 
+## [10] train-rmse:103.157635
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predict\_xgb }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(model\_xgb, test\_matrix)}
+\FunctionTok{postResample}\NormalTok{(predict\_xgb, test\_set\_factor}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       RMSE   Rsquared        MAE 
+## 76.0376857  0.5258062 60.9132809
+\end{verbatim}
+
+Se puede observar que los resultados obtenidos son peores que con la
+regresión lineal.
+
+Después de varias pruebas ajustando los hiperparámetros, y utilizando
+validación cruzada, esos hiperparámetros son los que mejor resultado
+aportan.
+
+Para terminar con este modelo vamos a mostar una gráfica de la
+importancia que han tenido las distintas variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xgb\_imp\_freq }\OtherTok{\textless{}{-}} \FunctionTok{xgb.importance}\NormalTok{(}\AttributeTok{feature\_names =} \FunctionTok{colnames}\NormalTok{(train\_matrix), }
+                               \AttributeTok{model =}\NormalTok{ model\_xgb)}
+\FunctionTok{xgb.plot.importance}\NormalTok{(xgb\_imp\_freq)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-37-1.pdf}
+
+En puntos anteriores entrenamos un random forest para determinar la
+importancia de las variables.
+
+Vamos a observar que resultados aporta:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predicted\_rf }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(model\_rf, }
+                          \FunctionTok{select}\NormalTok{(test\_set, }\SpecialCharTok{{-}}\NormalTok{trip\_duration))}
+
+\FunctionTok{postResample}\NormalTok{(predicted\_rf, test\_set}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         RMSE     Rsquared          MAE 
+## 1.010730e-04 6.767166e-01 7.108522e-05
+\end{verbatim}
+
+Después de analizar los distintos modelos se llega a la conclusión de
+que el mejor modelo para este conjunto de datos es la regresión lineal
+utilizando la distancia Manhattan.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# eliminación de variables usadas en supervisado}
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list=}\FunctionTok{ls}\NormalTok{())}
+
+\CommentTok{\# recarga de datos}
+\NormalTok{train }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"datos/train.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{no-supervisado}{%
+\section{No supervisado}\label{no-supervisado}}
+
+\hypertarget{transformaciuxf3n-de-datos}{%
+\subsection{Transformación de datos}\label{transformaciuxf3n-de-datos}}
+
+La fase de transformación implica la modificación y limpieza de datos
+para que puedan ser utilizados posteriormente por el proceso DM (Data
+Mining).
+
+\hypertarget{cuxe1lculo-de-distancia}{%
+\subsubsection{Cálculo de distancia}\label{cuxe1lculo-de-distancia}}
+
+Se añade una columna en el dataset que represente la distancia entre el
+punto de recogida y el de llegada. Para ello, se usará la función de
+distancia Harvesine, una fórmula matemática utilizada para calcular la
+distancia en una superficie esférica (en este caso de la tierra) entre
+dos puntos geográficos (punto de recogida y punto de llegada). Estos
+datos vienen dados en metros.
+
+Se ha decidido usar esta distancia porque mide distancias rectilíneas de
+forma similar a la euclídea (al menos para una superficie esférica como
+es el planeta Tierra), y esta distancia supuso la variable más
+importante en el preprocesamiento del apartado anterior.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# calcular distancia Harversine}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{distance =} \FunctionTok{distHaversine}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(}\AttributeTok{longitude =}\NormalTok{ pickup\_longitude, }\AttributeTok{latitude =}\NormalTok{ pickup\_latitude), }\FunctionTok{cbind}\NormalTok{(}\AttributeTok{longitude =}\NormalTok{ dropoff\_longitude, }\AttributeTok{latitude =}\NormalTok{ dropoff\_latitude)))}
+
+\CommentTok{\# representa las caracterícticas de distancia}
+\FunctionTok{summary}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{distance)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0    1233    2096    3445    3880 1242299
+\end{verbatim}
+
+\hypertarget{eliminaciuxf3n-de-datos}{%
+\subsubsection{Eliminación de datos}\label{eliminaciuxf3n-de-datos}}
+
+Dado que el conjunto de datos es grande y existen columnas redundantes,
+se va a eliminar aquellas no relevantes para simplificar y mejorar la
+eficiencia del análisis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# eliminación columnas no relevantes}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{id }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{vendor\_id }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{passenger\_count }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{pickup\_datetime }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{dropoff\_datetime }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{store\_and\_fwd\_flag }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{pickup\_longitude }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{pickup\_latitude }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{dropoff\_longitude }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{dropoff\_latitude }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+
+\CommentTok{\# se representan el dataset train}
+\FunctionTok{head}\NormalTok{(train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   trip_duration distance
+## 1           455 1500.199
+## 2           663 1807.530
+## 3          2124 6392.251
+## 4           429 1487.163
+## 5           435 1189.920
+## 6           443 1100.174
+\end{verbatim}
+
+\hypertarget{datos-imperfectos}{%
+\subsubsection{Datos imperfectos}\label{datos-imperfectos}}
+
+A continuación, se va a representar la distancia frente a la duración
+para visualizar si existen datos imperfectos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# REPRESENTACIÓN }\AlertTok{TODO}\CommentTok{ DATASET {-}\textgreater{} tarda en cargar}
+\CommentTok{\# plot(x = train$distance, y = train$trip\_duration)}
+
+\CommentTok{\# REPRESENTACIÓN ALEATORIA}
+\NormalTok{temp\_train }\OtherTok{\textless{}{-}} \FunctionTok{sample\_n}\NormalTok{(train, }\DecValTok{10000}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ temp\_train}\SpecialCharTok{$}\NormalTok{distance, }\AttributeTok{y =}\NormalTok{ temp\_train}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-42-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(temp\_train)}
+\end{Highlighting}
+\end{Shaded}
+
+Tras la representación, puede apreciarse que existen datos aislados con
+distancias de hasta 80km y con una duración de 16'6 horas. Lo cual nos
+indica una incongruencia, ya que esta ciudad en su parte más ancha mide
+13'4km.
+
+Por esta razón, se va a acotar tanto la duración como la distancia en
+unas cotas que representen gran parte del conjunto de los datos.
+
+Para la \textbf{duración}, se va a probar manualmente a acotar la
+duración con un intervalo máximo y mínimo. En este caso, se ha probado
+con el intervalo {[}10, 10.000{]} segundos, descartando solamente un
+0.29\% del total de los datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ACOTAR DURACIÓN}
+
+\FunctionTok{summary}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       1     397     662     959    1075 3526282
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# acotamos duración máxima}
+\NormalTok{max\_dur }\OtherTok{\textless{}{-}} \DecValTok{10000}
+\NormalTok{lim\_max\_dur }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(trip\_duration }\SpecialCharTok{\textgreater{}=}\NormalTok{ max\_dur))}
+\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Límitando como máximo la duración a \%ss {-}\textgreater{} eliminación \%s elementos (\%s\%\% del total)"}\NormalTok{, max\_dur, lim\_max\_dur, }\DecValTok{100} \SpecialCharTok{*}\NormalTok{ lim\_max\_dur }\SpecialCharTok{/} \FunctionTok{nrow}\NormalTok{(train))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Límitando como máximo la duración a 10000s -> eliminación 2123 elementos (0.145546137371422% del total)"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# acotamos duración mínima}
+\NormalTok{min\_dur }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{lim\_min\_dur }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(trip\_duration }\SpecialCharTok{\textless{}=}\NormalTok{ min\_dur))}
+\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Límitando como mínimo la duración a \%ss {-}\textgreater{} eliminación \%s elementos (\%s\%\% del total)"}\NormalTok{, min\_dur, lim\_min\_dur, }\DecValTok{100} \SpecialCharTok{*}\NormalTok{ lim\_min\_dur }\SpecialCharTok{/} \FunctionTok{nrow}\NormalTok{(train))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Límitando como mínimo la duración a 10s -> eliminación 2166 elementos (0.148494080803815% del total)"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# aplicando ambas restricciones}
+\NormalTok{lim\_dur }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(trip\_duration }\SpecialCharTok{\textless{}=}\NormalTok{ min\_dur }\SpecialCharTok{|}\NormalTok{ trip\_duration }\SpecialCharTok{\textgreater{}=}\NormalTok{ max\_dur)) }\CommentTok{\# nolint}
+\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Límitando duración entre [\%s, \%s] {-}\textgreater{} eliminación \%s elementos (\%s\%\% del total)"}\NormalTok{, min\_dur, max\_dur, lim\_dur, }\DecValTok{100} \SpecialCharTok{*}\NormalTok{ lim\_dur }\SpecialCharTok{/} \FunctionTok{nrow}\NormalTok{(train)) }\CommentTok{\# nolint}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Límitando duración entre [10, 10000] -> eliminación 4289 elementos (0.294040218175237% del total)"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# descartamos aquellos que no cumplan restricciones}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(trip\_duration }\SpecialCharTok{\textgreater{}}\NormalTok{ min\_dur }\SpecialCharTok{\&}\NormalTok{ trip\_duration }\SpecialCharTok{\textless{}}\NormalTok{ max\_dur)}
+\FunctionTok{rm}\NormalTok{(max\_dur, lim\_max\_dur, min\_dur, lim\_min\_dur, lim\_dur)}
+\end{Highlighting}
+\end{Shaded}
+
+Para la \textbf{distancia}, se va a probar manualmente a acotar la
+distancia con un intervalo máximo y mínimo. En este caso, se ha probado
+con el intervalo {[}10, 25.000{]} metros, descartando solamente un
+0.58\% del total de los datos (que ya han sido previamente filtrados en
+la duración.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ACOTAR DISTANCIA}
+
+\FunctionTok{summary}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{distance)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0    1236    2099    3448    3883 1242299
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# acotamos distancia máxima}
+\NormalTok{max\_dist }\OtherTok{\textless{}{-}} \DecValTok{25000}
+\NormalTok{lim\_max\_dist }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(distance }\SpecialCharTok{\textgreater{}=}\NormalTok{ max\_dist))}
+\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Límitando como máximo la distancia a \%sm {-}\textgreater{} eliminación \%s elementos (\%s\%\% del total)"}\NormalTok{, max\_dist, lim\_max\_dist, }\DecValTok{100} \SpecialCharTok{*}\NormalTok{ lim\_max\_dist }\SpecialCharTok{/} \FunctionTok{nrow}\NormalTok{(train))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Límitando como máximo la distancia a 25000m -> eliminación 1399 elementos (0.0961938453816297% del total)"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# acotamos distancia mínima}
+\NormalTok{min\_dist }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{lim\_min\_dist }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(distance }\SpecialCharTok{\textless{}=}\NormalTok{ min\_dist))}
+\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Límitando como mínimo la distancia a \%sm {-}\textgreater{} eliminación \%s elementos (\%s\%\% del total)"}\NormalTok{, min\_dist, lim\_min\_dist, }\DecValTok{100} \SpecialCharTok{*}\NormalTok{ lim\_min\_dist }\SpecialCharTok{/} \FunctionTok{nrow}\NormalTok{(train))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Límitando como mínimo la distancia a 10m -> eliminación 7108 elementos (0.488738994262061% del total)"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# aplicando ambas restricciones}
+\NormalTok{lim\_dist }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(distance }\SpecialCharTok{\textless{}=}\NormalTok{ min\_dist }\SpecialCharTok{|}\NormalTok{ distance }\SpecialCharTok{\textgreater{}=}\NormalTok{ max\_dist))}
+\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Límitando distancia entre [\%s, \%s] {-}\textgreater{} eliminación \%s elementos (\%s\%\% del total)"}\NormalTok{, min\_dist, max\_dist, lim\_dist, }\DecValTok{100} \SpecialCharTok{*}\NormalTok{ lim\_dist }\SpecialCharTok{/} \FunctionTok{nrow}\NormalTok{(train))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Límitando distancia entre [10, 25000] -> eliminación 8507 elementos (0.584932839643691% del total)"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# descartamos aquellos que no cumplan restricciones}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(distance }\SpecialCharTok{\textgreater{}}\NormalTok{ min\_dist }\SpecialCharTok{\&}\NormalTok{ distance }\SpecialCharTok{\textless{}}\NormalTok{ max\_dist)}
+\FunctionTok{rm}\NormalTok{(max\_dist, lim\_max\_dist, min\_dist, lim\_min\_dist, lim\_dist)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{normalizaciuxf3n-de-los-datos}{%
+\subsubsection{Normalización de los
+datos}\label{normalizaciuxf3n-de-los-datos}}
+
+Para que los datos dispongan de una distribución similar y estén en la
+misma escala se precisa realizar la normalización. Esta transformará
+tanto la duración como la distancia entre un \textbf{intervalo {[}0,
+1{]}}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# normalización de duración}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{trip\_duration }\OtherTok{\textless{}{-}} \FunctionTok{rescale}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+
+\CommentTok{\# normalización de distancia}
+\NormalTok{train}\SpecialCharTok{$}\NormalTok{distance }\OtherTok{\textless{}{-}} \FunctionTok{rescale}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{distance)}
+
+\CommentTok{\# muestra el conjunto de entrenamiento}
+\FunctionTok{head}\NormalTok{(train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   trip_duration   distance
+## 1    0.04452020 0.05963621
+## 2    0.06537652 0.07193551
+## 3    0.21187205 0.25541526
+## 4    0.04191317 0.05911447
+## 5    0.04251479 0.04721888
+## 6    0.04331696 0.04362724
+\end{verbatim}
+
+\hypertarget{representaciuxf3n-de-datos}{%
+\subsubsection{Representación de
+datos}\label{representaciuxf3n-de-datos}}
+
+Una vez se ha aplicado las distintas técnicas de transformación al
+dataset, se va a representar para identificar a simple vista si existen
+algunos datos incongruentes. Tras el análisis visual, se puede concretar
+que el dataset se encuentra preparado para su uso en el proceso de Data
+Mining.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# REPRESENTACIÓN }\AlertTok{TODO}\CommentTok{ DATASET {-}\textgreater{} tarda en cargar}
+\CommentTok{\# plot(x = train$distance, y = train$trip\_duration)}
+
+\CommentTok{\# REPRESENTACIÓN ALEATORIA}
+\NormalTok{temp\_train }\OtherTok{\textless{}{-}} \FunctionTok{sample\_n}\NormalTok{(train, }\DecValTok{50000}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ temp\_train}\SpecialCharTok{$}\NormalTok{distance, }\AttributeTok{y =}\NormalTok{ temp\_train}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-46-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(temp\_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-mining-clustering}{%
+\subsection{Data Mining: Clustering}\label{data-mining-clustering}}
+
+Data Mining es el proceso de explorar y analizar grandes conjuntos de
+datos con el fin de descubrir patrones y relaciones ocultos. Dentro de
+este proceso, existen las técnicas de clustering, que son aquellas que
+se utilizan para agrupar datos similares en ``clusters'', conjuntos o
+grupos.
+
+En este caso, se va a aplicar clustering para identificar los distintos
+tipos de trayecto en función de la distancia y de la duración.
+
+\hypertarget{clustering-con-k-means}{%
+\subsubsection{Clustering con K-means}\label{clustering-con-k-means}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Obtener número óptimo de clusters}
+\end{enumerate}
+
+Se representa la compactación en relación con el número de clusters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vector\_compactacion }\OtherTok{\textless{}{-}} \DecValTok{0}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{) \{}
+\NormalTok{  km\_train\_aux2 }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(train,}\AttributeTok{center=}\NormalTok{i,}\AttributeTok{nstar=}\DecValTok{20}\NormalTok{)}
+\NormalTok{  vector\_compactacion[i] }\OtherTok{\textless{}{-}}\NormalTok{ km\_train\_aux2}\SpecialCharTok{$}\NormalTok{tot.withinss}
+\NormalTok{\}}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)) }
+\FunctionTok{plot}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{, vector\_compactacion, }\AttributeTok{type =} \StringTok{"b"}\NormalTok{, }
+     \AttributeTok{xlab =} \StringTok{"Numero de clusters"}\NormalTok{, }
+     \AttributeTok{ylab =} \StringTok{"Compactacion"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Se determina que el número óptimo de clusters son 3, ya que a partir de
+ahí se estabiliza.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Aplicar función kmeans}
+\end{enumerate}
+
+Se extrae los clusters mediante la técnica de k-means o k-medias.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# división en clústeres}
+\NormalTok{km\_train }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(train, }\AttributeTok{center =} \DecValTok{3}\NormalTok{, }\AttributeTok{nstar =} \DecValTok{20}\NormalTok{)}
+
+\CommentTok{\# breve resumen resultados tras aplicar la técnica}
+\FunctionTok{summary}\NormalTok{(km\_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Length  Class  Mode   
+## cluster      1445848 -none- numeric
+## centers            6 -none- numeric
+## totss              1 -none- numeric
+## withinss           3 -none- numeric
+## tot.withinss       1 -none- numeric
+## betweenss          1 -none- numeric
+## size               3 -none- numeric
+## iter               1 -none- numeric
+## ifault             1 -none- numeric
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \textbf{Representación de clústeres}
+\end{enumerate}
+
+Se representan los clústeres extraídos mediante k-means.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# representación de los clusters}
+\FunctionTok{ggplot}\NormalTok{(train, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ distance, }\AttributeTok{y =}\NormalTok{ trip\_duration, }\AttributeTok{color =} \FunctionTok{factor}\NormalTok{(km\_train}\SpecialCharTok{$}\NormalTok{cluster))) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-49-1.pdf}
+
+\hypertarget{clustering-con-uxe1rboles-jeruxe1rquicos}{%
+\subsubsection{Clustering con árboles
+jerárquicos}\label{clustering-con-uxe1rboles-jeruxe1rquicos}}
+
+Son algoritmos que se basan en construir un dendograma de forma que se
+secciona por el número de clusters deseados.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Calcular matriz de distancias}
+\end{enumerate}
+
+Este algoritmo usa la matriz de distancias para crear el dendograma, es
+por ello que en primera instancia será necesario obtener esta matriz.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{points }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{distance, train}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\NormalTok{dist\_tree }\OtherTok{\textless{}{-}} \FunctionTok{dist}\NormalTok{(points)}
+\FunctionTok{rm}\NormalTok{(points)}
+\end{Highlighting}
+\end{Shaded}
+
+Como se puede apreciar, la cantidad de datos para construir un
+dendograma es muy grande para los datos dados, concretamente de 31Tb de
+datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# existen 1445848 registros}
+\FunctionTok{nrow}\NormalTok{(train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1445848
+\end{verbatim}
+
+Dado que existen 1445848 elementos en el dataset, se va a reducir este
+número para crear una matriz de distancias que pueda ser analizada
+computacionalmente a día de hoy. Para ello, se ha extraido 20000
+elementos de forma aleatoria del dataset para llevar a cabo esta tarea.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# número de elementos}
+\CommentTok{\# menor tamaño {-}\textgreater{} menor consumo de memoria y tiempo de CPU}
+\NormalTok{n\_dataset }\OtherTok{\textless{}{-}} \DecValTok{20000}
+
+\CommentTok{\# reducción de los datos de forma aleatoria}
+\CommentTok{\# ¡ADVERTENCIA! En cada ejecución se tomarán unos datos diferentes}
+\NormalTok{red\_train }\OtherTok{\textless{}{-}} \FunctionTok{sample\_n}\NormalTok{(train, n\_dataset)}
+\FunctionTok{rm}\NormalTok{(n\_dataset)}
+
+\CommentTok{\# representar datos seleccionados}
+\FunctionTok{plot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ red\_train}\SpecialCharTok{$}\NormalTok{distance, }\AttributeTok{y =}\NormalTok{ red\_train}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-52-1.pdf}
+
+Se crea la matriz de distancias reducida con los 20k elementos. Aún así,
+esta matriz ocupa en memoria 1,5GB.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# construcción de matriz de distancias}
+\NormalTok{dist\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{dist}\NormalTok{(red\_train)}
+
+\CommentTok{\# obtener tamaño de matriz de distancias {-}\textgreater{} RAM}
+\FunctionTok{format}\NormalTok{(}\FunctionTok{object.size}\NormalTok{(dist\_matrix), }\AttributeTok{units =} \StringTok{"GB"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "1.5 Gb"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Aplicar función hclust}
+\end{enumerate}
+
+Se aplica la función que permite extraer el agrupamiento jerárquico en
+un conjunto de datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# aplicar hclust para obtener árbol}
+\NormalTok{hc }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(dist\_matrix)}
+\FunctionTok{rm}\NormalTok{(dist\_matrix)}
+\FunctionTok{summary}\NormalTok{(hc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Length Class  Mode     
+## merge       39998  -none- numeric  
+## height      19999  -none- numeric  
+## order       20000  -none- numeric  
+## labels          0  -none- NULL     
+## method          1  -none- character
+## call            2  -none- call     
+## dist.method     1  -none- character
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \textbf{Visualización del dendograma}
+\end{enumerate}
+
+Se representa el dendograma o árbol de clústeres. Como podrá observarse,
+el dendograma dispone de una gran cantidad de niveles debido a la
+cantidad de datos y sus posibles agrupaciones (20000 datos con una
+altura de 19999 niveles).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(hc)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-55-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \textbf{Obtener número óptimo de clusters}
+\end{enumerate}
+
+Una vez tenemos el dendograma, será necesario determinar cúantos números
+de clusters deseamos para cortar el dendograma. Para ello vamos a
+representar el TSS en relación al número de clusters, para así
+determinar la mejor opción de forma visual.
+
+Nota: esta función puede tardar varios minutos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# representa WSS {-} K (nº de clusters)}
+\CommentTok{\# computacionalmente complejo {-}\textgreater{} \textasciitilde{}5 min}
+\FunctionTok{fviz\_nbclust}\NormalTok{(red\_train, }\AttributeTok{FUN =}\NormalTok{ hcut, }\AttributeTok{method =} \StringTok{"wss"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Se ha optado por elegir 4 clusters, ya que a partir de este se
+estabiliza y no aporta más valor tener más clusters.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  \textbf{Corte del dendograma}
+\end{enumerate}
+
+Se corta el dendograma en los 4 clusters que se han determinado
+previamente. Posteriormente se representa.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# nº clusters seleccionados para corte dendograma}
+\NormalTok{k }\OtherTok{\textless{}{-}} \DecValTok{4}
+
+\CommentTok{\# dendograma cortado}
+\NormalTok{cut\_dend }\OtherTok{\textless{}{-}} \FunctionTok{cutree}\NormalTok{(hc, }\AttributeTok{k =}\NormalTok{ k)}
+\NormalTok{class\_red\_train }\OtherTok{\textless{}{-}} \FunctionTok{mutate}\NormalTok{(red\_train, }\AttributeTok{cluster =}\NormalTok{ cut\_dend)}
+\FunctionTok{rm}\NormalTok{(k, cut\_dend, hc)}
+\FunctionTok{head}\NormalTok{(class\_red\_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   trip_duration   distance cluster
+## 1    0.02366389 0.04261694       1
+## 2    0.06236839 0.11181339       1
+## 3    0.03228718 0.04136541       1
+## 4    0.03098366 0.04194493       1
+## 5    0.11370701 0.09907438       1
+## 6    0.25609145 0.36149221       1
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  \textbf{Representación de clusters}
+\end{enumerate}
+
+Se representan los clusteres para los puntos datos, tras el corte
+realizado en el dendograma.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# representa dendograma cortado}
+\FunctionTok{ggplot}\NormalTok{(class\_red\_train, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ distance, }\AttributeTok{y =}\NormalTok{ trip\_duration, }\AttributeTok{color =} \FunctionTok{factor}\NormalTok{(cluster))) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-58-1.pdf}
+
+\hypertarget{clustering-basado-en-densidad}{%
+\subsubsection{Clustering basado en
+densidad}\label{clustering-basado-en-densidad}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Matriz de distancias}
+\end{enumerate}
+
+Se obtiene la matriz de distancias de la misma forma que se realiza en
+el clustering jerárquico.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# número de elementos}
+\CommentTok{\# menor tamaño {-}\textgreater{} menor consumo de memoria y tiempo de CPU}
+\NormalTok{n\_dataset }\OtherTok{\textless{}{-}} \DecValTok{5000}
+
+\CommentTok{\# reducción de los datos de forma aleatoria}
+\CommentTok{\# ¡ADVERTENCIA! En cada ejecución se tomarán unos datos diferentes}
+\NormalTok{red\_train }\OtherTok{\textless{}{-}} \FunctionTok{sample\_n}\NormalTok{(train, n\_dataset)}
+
+\CommentTok{\# representar datos seleccionados}
+\FunctionTok{plot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ red\_train}\SpecialCharTok{$}\NormalTok{distance, }\AttributeTok{y =}\NormalTok{ red\_train}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-59-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# construcción de matriz de distancias}
+\NormalTok{dist\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{dist}\NormalTok{(red\_train)}
+
+\CommentTok{\# obtener tamaño de matriz de distancias {-}\textgreater{} RAM}
+\FunctionTok{format}\NormalTok{(}\FunctionTok{object.size}\NormalTok{(dist\_matrix), }\AttributeTok{units =} \StringTok{"GB"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "0.1 Gb"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Obtener EPS} Mediante la función kNNdist se puede determinar
+  el EPS que se va a utilizar.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# select number of clusters}
+\NormalTok{k }\OtherTok{\textless{}{-}} \DecValTok{2}
+
+\CommentTok{\# original function}
+\CommentTok{\# kNNdistplot(dist\_matrix, k)}
+
+\CommentTok{\# custom function}
+\NormalTok{knn\_dist }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(}\FunctionTok{kNNdist}\NormalTok{(dist\_matrix, k))}
+\FunctionTok{plot}\NormalTok{(knn\_dist, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{ylab =} \FunctionTok{paste}\NormalTok{(k, }\StringTok{"{-}NN distance"}\NormalTok{, }\AttributeTok{sep =} \StringTok{""}\NormalTok{), }\AttributeTok{xlab =} \StringTok{"Points (sample) sorted by distance"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.03}\NormalTok{))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ .}\DecValTok{008}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-60-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \textbf{Aplicar función dbscan} Se aplica la función dbscan para
+  categorizar en los diferentes clusters.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# minimum of points per cluster}
+\NormalTok{min\_pts }\OtherTok{\textless{}{-}}\NormalTok{ n\_dataset }\SpecialCharTok{/} \DecValTok{100}
+
+\CommentTok{\# eps: max. dist. entre 2 puntos para ser considerado vecino de otro}
+\NormalTok{eps }\OtherTok{\textless{}{-}} \FloatTok{0.008}
+
+\CommentTok{\# uso de la función dbscan}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{db }\OtherTok{\textless{}{-}} \FunctionTok{dbscan}\NormalTok{(dist\_matrix, eps, min\_pts)}
+\FunctionTok{rm}\NormalTok{(n\_dataset, min\_pts)}
+\NormalTok{db}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## DBSCAN clustering for 5000 objects.
+## Parameters: eps = 0.008, minPts = 50
+## Using euclidean distances and borderpoints = TRUE
+## The clustering contains 1 cluster(s) and 2135 noise points.
+## 
+##    0    1 
+## 2135 2865 
+## 
+## Available fields: cluster, eps, minPts, dist, borderPoints
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \textbf{Representación de clusters} Se representan los diferentes
+  clústeres extraídos mediante densidad.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# representación de los clusters}
+\FunctionTok{ggplot}\NormalTok{(red\_train, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ distance, }\AttributeTok{y =}\NormalTok{ trip\_duration, }\AttributeTok{color =} \FunctionTok{factor}\NormalTok{(db}\SpecialCharTok{$}\NormalTok{cluster))) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-62-1.pdf}
+
+\hypertarget{interpretaciuxf3n-de-los-datos}{%
+\subsection{Interpretación de los
+datos}\label{interpretaciuxf3n-de-los-datos}}
+
+\hypertarget{aux}{%
+\section{AUX}\label{aux}}
+
+\hypertarget{muxe9todo-de-reducciuxf3n-de-datos-auxiliar}{%
+\subsection{Método de reducción de datos
+auxiliar}\label{muxe9todo-de-reducciuxf3n-de-datos-auxiliar}}
+
+Este método fue usado para intentar equilibrar la carga de datos del
+dataset, pero disponía del problema que indicaba mayor concentración de
+puntos justamente en el comienzo de cada uno de los segmentos de
+distancia.
+
+Consiste en segmentar los datos en 3 grupos (menores de 1500 metros,
+comprendidos entre 1500 y 3000 metros y mayores de 3000) y se obtendrán
+un subconjunto de estos de forma aleatoria de 1000 elementos.
+Posteriormente, estos 3 conjuntos se unirán entre sí para dar lugar al
+conjunto sobre el que se va a contruir el dendograma.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1º conj.}
+\NormalTok{set1 }\OtherTok{\textless{}{-}} \FunctionTok{sample\_n}\NormalTok{(train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(distance }\SpecialCharTok{\textless{}=} \FloatTok{0.3}\NormalTok{), }\DecValTok{1000}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(set1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   trip_duration   distance
+## 1    0.02867743 0.05280946
+## 2    0.09876667 0.12014701
+## 3    0.04782914 0.09605358
+## 4    0.06517598 0.12807523
+## 5    0.09465557 0.09040491
+## 6    0.10979645 0.09395822
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(set1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  trip_duration         distance      
+##  Min.   :0.002406   Min.   :0.00191  
+##  1st Qu.:0.036699   1st Qu.:0.04704  
+##  Median :0.058408   Median :0.07396  
+##  Mean   :0.067401   Mean   :0.09238  
+##  3rd Qu.:0.089567   3rd Qu.:0.12021  
+##  Max.   :0.267121   Max.   :0.29937
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2º conj.}
+\NormalTok{set2 }\OtherTok{\textless{}{-}} \FunctionTok{sample\_n}\NormalTok{(train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(distance }\SpecialCharTok{\textgreater{}} \FloatTok{0.3} \SpecialCharTok{\&}\NormalTok{ distance }\SpecialCharTok{\textless{}} \FloatTok{0.6}\NormalTok{), }\DecValTok{1000}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(set2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   trip_duration  distance
+## 1    0.14017848 0.3031358
+## 2    0.17818109 0.3406996
+## 3    0.10508373 0.3389650
+## 4    0.08623283 0.3204308
+## 5    0.09415422 0.4239517
+## 6    0.15481801 0.3398516
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(set2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  trip_duration        distance     
+##  Min.   :0.03499   Min.   :0.3001  
+##  1st Qu.:0.12764   1st Qu.:0.3426  
+##  Median :0.16048   Median :0.3832  
+##  Mean   :0.17401   Mean   :0.4056  
+##  3rd Qu.:0.20733   3rd Qu.:0.4540  
+##  Max.   :0.83947   Max.   :0.5988
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 3º conj.}
+\NormalTok{set3 }\OtherTok{\textless{}{-}} \FunctionTok{sample\_n}\NormalTok{(train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(distance }\SpecialCharTok{\textgreater{}=} \FloatTok{0.6}\NormalTok{), }\DecValTok{1000}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(set3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   trip_duration  distance
+## 1     0.5802667 0.7583583
+## 2     0.3329991 0.8206158
+## 3     0.1790835 0.6262418
+## 4     0.1633410 0.8358126
+## 5     0.2584979 0.8404432
+## 6     0.2444600 0.7213209
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(set3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  trip_duration        distance     
+##  Min.   :0.07711   Min.   :0.6001  
+##  1st Qu.:0.19242   1st Qu.:0.7231  
+##  Median :0.24391   Median :0.8033  
+##  Mean   :0.26418   Mean   :0.7844  
+##  3rd Qu.:0.31483   3rd Qu.:0.8427  
+##  Max.   :0.76286   Max.   :0.9953
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# unir todos los conjuntos}
+\NormalTok{red\_train }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(set1, set2, set3)}
+\FunctionTok{rm}\NormalTok{(set1, set2, set3)}
+\FunctionTok{head}\NormalTok{(red\_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   trip_duration   distance
+## 1    0.02867743 0.05280946
+## 2    0.09876667 0.12014701
+## 3    0.04782914 0.09605358
+## 4    0.06517598 0.12807523
+## 5    0.09465557 0.09040491
+## 6    0.10979645 0.09395822
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(red\_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  trip_duration         distance      
+##  Min.   :0.002406   Min.   :0.00191  
+##  1st Qu.:0.084077   1st Qu.:0.12035  
+##  Median :0.154517   Median :0.38317  
+##  Mean   :0.168528   Mean   :0.42747  
+##  3rd Qu.:0.229219   3rd Qu.:0.72306  
+##  Max.   :0.839467   Max.   :0.99531
+\end{verbatim}
+
+Se representa esta distribución.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ red\_train}\SpecialCharTok{$}\NormalTok{distance, }\AttributeTok{y =}\NormalTok{ red\_train}\SpecialCharTok{$}\NormalTok{trip\_duration)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{taxi_trip_fid_files/figure-latex/unnamed-chunk-64-1.pdf}
+
+\hypertarget{bibliografuxeda}{%
+\section{Bibliografía}\label{bibliografuxeda}}
+
+\url{https://www.datacamp.com/tutorial/hierarchical-clustering-R}
+\url{https://uc-r.github.io/hc_clustering}
+
+\end{document}
