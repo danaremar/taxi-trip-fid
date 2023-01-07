@@ -1109,7 +1109,10 @@ plot(x = red_train$distance, y = red_train$trip_duration)
 -   **Bruno González Arenas**
 
     -   *Visualización*, *preprocesamiento*
-    -   Aprendizaje supervisado
+    
+    -   *Aprendizaje supervisado*
+    
+    -   *BigML: documentación y presentación*
 
 -   **Carlos González Arenas**
 
@@ -1117,12 +1120,15 @@ plot(x = red_train$distance, y = red_train$trip_duration)
 
     -   *Aprendizaje supervisado*
 
-    -   BigML: documentación
+    -   *BigML: documentación y presentación*
 
 -   **Diego Monsalves Vázquez**
 
     -   *Visualización*, *preprocesamiento*
-    -   Aprendizaje supervisado
+ 
+    -   *Aprendizaje supervisado*
+
+    -   *BigML: documentación y presentación*
 
 ## Subgrupo 2 (aprendizaje no supervisado)
 
