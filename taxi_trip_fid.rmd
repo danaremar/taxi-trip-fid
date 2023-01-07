@@ -658,7 +658,7 @@ train <- read.csv("datos/train.csv")
 
 ## Transformación de datos
 
-La fase de transformación implica la modificación y limpieza de datos para que puedan ser utilizados posteriormente por el proceso DM (Data Mining).
+La fase de transformación implica la modificación y limpieza de datos para que puedan ser utilizados posteriormente por el proceso DM (Data Mining) adaptándose al proceso de .
 
 ### Cálculo de distancia
 
@@ -1057,9 +1057,9 @@ ggplot(red_train, aes(x = distance, y = trip_duration, color = factor(db$cluster
 
 ## Interpretación de los datos
 
-# AUX
+# Métodos auxiliares
 
-## Método de reducción de datos auxiliar
+## Método de reducción de datos
 
 Este método fue usado para intentar equilibrar la carga de datos del dataset, pero disponía del problema que indicaba mayor concentración de puntos justamente en el comienzo de cada uno de los segmentos de distancia.
 
