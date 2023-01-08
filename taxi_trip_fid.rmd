@@ -9,9 +9,13 @@ output:
 
 # Introducción
 
-Los taxis de New York son una forma común de transporte en la ciudad. Están disponibles en toda la ciudad y pueden ser reconocidos por su característica pintura amarilla. Los conductores de taxis de Nueva York deben tener una licencia especial y una tarjeta de identificación, y los vehículos deben pasar inspecciones regulares para asegurar la seguridad de los pasajeros. Los pasajeros pueden solicitar un taxi en la calle, a través de una aplicación móvil o en una parada de taxi designada. Los taxis también pueden ser contratados para viajes más largos fuera de la ciudad.
+Los taxis de New York son una forma común de transporte en la ciudad. Están disponibles en toda la ciudad y pueden ser reconocidos por su característica pintura amarilla.
 
-A continuación, se va a analizar un dataset sobre los trayectos de taxis que incluirá los siguientes datos:
+Los conductores de taxis de Nueva York deben tener una licencia especial y una tarjeta de identificación, y los vehículos deben pasar inspecciones regulares para asegurar la seguridad de los pasajeros.
+
+Los pasajeros pueden solicitar un taxi en la calle, a través de una aplicación móvil o en una parada de taxi designada. Los taxis también pueden ser contratados para viajes más largos fuera de la ciudad.
+
+A continuación, se va a analizar el dataset "train" sobre los trayectos de taxis que incluirá los siguientes datos:
 
 -   *id*: identifica a cada viaje
 
@@ -54,8 +58,6 @@ library(tidyverse)
 library(lubridate)
 library(gridExtra)
 library("xgboost")
-library(cluster)
-library(fpc)
 library(randomForest)
 
 ```
@@ -192,9 +194,11 @@ Un campo importante a la hora de visualizar es la distancia que existe entre el 
 Vamos a crear dos nuevas columnas que contengan esta información. Crearemos una con la distancia euclídea y otra con la manhattan, y compararemos los resultados
 
 ```{r}
-euclidean <- function(x1, x2, y1, y2) sqrt((x1 - y1)^2 + (x2 - y2)^2)
+
+degree_to_meters <- 111320
+euclidean <- function(x1, x2, y1, y2) sqrt((x1 - y1)^2 + (x2 - y2)^2)*degree_to_meters
 manhattan <- function(x1, x2, y1, y2){
-    dist <- abs(x1-y1) + abs(x2-y2)
+    dist <- (abs(x1-y1) + abs(x2-y2)) * degree_to_meters
     return(dist)
 }
 
@@ -1054,7 +1058,7 @@ db
 ```{r}
 
 # representación de los clusters
-ggplot(r_red_train, aes(x = distance, y = trip_duration, color = factor(db$cluster))) + geom_point()
+ggplot(d_red_train, aes(x = distance, y = trip_duration, color = factor(db$cluster))) + geom_point()
 
 ```
 
