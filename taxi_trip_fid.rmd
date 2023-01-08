@@ -1069,7 +1069,9 @@ ggplot(d_red_train, aes(x = distance, y = trip_duration, color = factor(db$clust
 
 ```
 
-### Comparativa de clustering
+### Comparativa de métodos de clustering
+
+A continuación, se va a comparar las anteriores técnicas de clustering mediante el TSS:
 
 ```{r}
 
@@ -1107,7 +1109,20 @@ tss_h <- getTSS(h_dist_matrix, h_red_train$cluster)
 # TSS para densidad
 tss_d <- getTSS(d_dist_matrix, db$cluster)
 
+# representa la diferencia entre los algoritmos de clustering
+dif_clust <- c(tss_km, tss_h, tss_d)
+names_alg_clust <- c("k-means", "jerárquico", "densidad")
+
+my_bar <- barplot(dif_clust, border=F,
+     xlab = "Algoritmo", ylab = "TSS",
+     names.arg = names_alg_clust,
+     col = c("royalblue", "seagreen", "purple"),
+     ylim=c(0,9000))
+ text(x = my_bar, y = dif_clust, labels = dif_clust, cex=1, pos=3)
+
 ```
+
+Por lo que se puede concluir, que el **mejor modelo de clustering** para este caso concreto es **k-means**, además de que dispone de mayor TSS es capaz de funcionar con todo el dataset.
 
 ## Interpretación de los datos
 
