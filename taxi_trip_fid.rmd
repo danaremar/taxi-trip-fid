@@ -987,7 +987,6 @@ ggplot(h_red_train, aes(x = distance, y = trip_duration, color = factor(cluster)
 
 ```
 
-
 ### Clustering basado en densidad
 
 1.  **Matriz de distancias**
@@ -1059,7 +1058,6 @@ ggplot(r_red_train, aes(x = distance, y = trip_duration, color = factor(db$clust
 
 ```
 
-
 ### Comparativa de clustering
 
 ```{r}
@@ -1100,11 +1098,9 @@ tss_d <- getTSS(d_dist_matrix, db$cluster)
 
 ```
 
-
-
 ## Interpretación de los datos
 
-Como hemos visto en los algoritmos anteriores, el número óptimo de clusteres que podemos crear son entorno a 3 y 4. Estos numeros son correctos, ya que coinciden con los que estabamos buscando. 
+Como hemos visto en los algoritmos anteriores, el número óptimo de clusteres que podemos crear son entorno a 3 y 4. Estos numeros son correctos, ya que coinciden con los que estabamos buscando.
 
 Nos quedamos con un cluster de 3. Así tenemos un cluster para los viajes rápidos, medios y lentos respecto a la distancia y tiempo del recorrido de los diferentes taxis de Nueva York.
 
@@ -1153,12 +1149,12 @@ plot(x = red_train$distance, y = red_train$trip_duration)
 
 ## Subgrupo 1 (aprendizaje supervisado)
 
--   **Bruno González Arenas**
+-   **Bruno González Llaga**
 
     -   *Visualización*, *preprocesamiento*
-    
+
     -   *Aprendizaje supervisado*
-    
+
     -   *BigML: documentación y presentación*
 
 -   **Carlos González Arenas**
@@ -1172,7 +1168,7 @@ plot(x = red_train$distance, y = red_train$trip_duration)
 -   **Diego Monsalves Vázquez**
 
     -   *Visualización*, *preprocesamiento*
- 
+
     -   *Aprendizaje supervisado*
 
     -   *BigML: documentación y presentación*
