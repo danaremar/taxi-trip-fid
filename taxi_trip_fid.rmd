@@ -1,6 +1,6 @@
 ---
 title: "Analisis de los trayectos de taxis de NY"
-author: "Daniel Arellano Martínez, Bruno González Arenas, Carlos González Arenas, Diego Monsalves Vázquez y Víctor Manuel Vázquez García"
+author: "Daniel Arellano Martínez, Bruno González Llaga, Carlos González Arenas, Diego Monsalves Vázquez y Víctor Manuel Vázquez García"
 output:
   pdf_document: default
   html_document:
