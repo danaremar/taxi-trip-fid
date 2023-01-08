@@ -54,6 +54,8 @@ library(tidyverse)
 library(lubridate)
 library(gridExtra)
 library("xgboost")
+library(cluster)
+library(fpc)
 
 ```
 
@@ -647,7 +649,7 @@ Después de analizar los distintos modelos se llega a la conclusión de que el m
 ```{r}
 
 # eliminación de variables usadas en supervisado
-rm(list=ls())
+rm(list = ls())
 
 # recarga de datos
 train <- read.csv("datos/train.csv")
@@ -873,13 +875,12 @@ Este algoritmo usa la matriz de distancias para crear el dendograma, es por ello
 
 ```{r eval=FALSE}
 
-points <- c(train$distance, train$trip_duration)
-dist_tree <- dist(points)
-rm(points)
+# requiere 7TB de memoria
+h_dist_matrix <- dist(train)
 
 ```
 
-Como se puede apreciar, la cantidad de datos para construir un dendograma es muy grande para los datos dados, concretamente de 31Tb de datos.
+Como se puede apreciar, la cantidad de datos para construir un dendograma es muy grande para los datos dados, concretamente de 7TB de datos en la memoria.
 
 ```{r}
 
@@ -911,10 +912,10 @@ Se crea la matriz de distancias reducida con los 20k elementos. Aún así, esta 
 ```{r}
 
 # construcción de matriz de distancias
-dist_matrix <- dist(red_train)
+h_dist_matrix <- dist(red_train)
 
 # obtener tamaño de matriz de distancias -> RAM
-format(object.size(dist_matrix), units = "GB")
+format(object.size(h_dist_matrix), units = "GB")
 
 ```
 
@@ -925,8 +926,7 @@ Se aplica la función que permite extraer el agrupamiento jerárquico en un conj
 ```{r}
 
 # aplicar hclust para obtener árbol
-hc <- hclust(dist_matrix)
-rm(dist_matrix)
+hc <- hclust(h_dist_matrix)
 summary(hc)
 
 ```
@@ -952,6 +952,7 @@ Nota: esta función puede tardar varios minutos.
 # representa WSS - K (nº de clusters)
 # computacionalmente complejo -> ~5 min
 fviz_nbclust(red_train, FUN = hcut, method = "wss")
+abline(h = .008, col = "red")
 
 ```
 
@@ -985,6 +986,7 @@ ggplot(h_red_train, aes(x = distance, y = trip_duration, color = factor(cluster)
 
 ```
 
+
 ### Clustering basado en densidad
 
 1.  **Matriz de distancias**
@@ -999,16 +1001,16 @@ n_dataset <- 5000
 
 # reducción de los datos de forma aleatoria
 # ¡ADVERTENCIA! En cada ejecución se tomarán unos datos diferentes
-red_train <- sample_n(train, n_dataset)
+d_red_train <- sample_n(train, n_dataset)
 
 # representar datos seleccionados
-plot(x = red_train$distance, y = red_train$trip_duration)
+plot(x = d_red_train$distance, y = d_red_train$trip_duration)
 
 # construcción de matriz de distancias
-dist_matrix <- dist(red_train)
+d_dist_matrix <- dist(d_red_train)
 
 # obtener tamaño de matriz de distancias -> RAM
-format(object.size(dist_matrix), units = "GB")
+format(object.size(d_dist_matrix), units = "GB")
 
 ```
 
@@ -1023,9 +1025,10 @@ k <- 2
 # kNNdistplot(dist_matrix, k)
 
 # custom function
-knn_dist <- sort(kNNdist(dist_matrix, k))
+knn_dist <- sort(kNNdist(d_dist_matrix, k))
 plot(knn_dist, type = "l", ylab = paste(k, "-NN distance", sep = ""), xlab = "Points (sample) sorted by distance", ylim = c(0, 0.03))
 abline(h = .008, col = "red")
+rm(knn_dist)
 
 ```
 
@@ -1041,8 +1044,8 @@ eps <- 0.008
 
 # uso de la función dbscan
 set.seed(1234)
-db <- dbscan(dist_matrix, eps, min_pts)
-rm(n_dataset, min_pts)
+db <- dbscan(d_dist_matrix, eps, min_pts)
+rm(n_dataset, eps, min_pts)
 db
 ```
 
@@ -1051,9 +1054,52 @@ db
 ```{r}
 
 # representación de los clusters
-ggplot(red_train, aes(x = distance, y = trip_duration, color = factor(db$cluster))) + geom_point()
+ggplot(r_red_train, aes(x = distance, y = trip_duration, color = factor(db$cluster))) + geom_point()
 
 ```
+
+
+### Comparativa de clustering
+
+```{r}
+
+# función cálculo TSS dada matriz de distancia
+getTSS <- function(d, cluster) {
+  d <- stats::as.dist(d)
+  cn <- max(cluster)
+  clusterf <- as.factor(cluster)
+  clusterl <- levels(clusterf)
+  cnn <- length(clusterl)
+  
+  if (cn != cnn) {
+    warning("cluster renumbered because maximum != number of clusters")
+    for (i in 1:cnn) cluster[clusterf == clusterl[i]] <- i
+    cn <- cnn
+  }
+  cwn <- cn
+  # Compute total within sum of square
+  dmat <- as.matrix(d)
+  within.cluster.ss <- 0
+  for (i in 1:cn) {
+    cluster.size <- sum(cluster == i)
+    di <- as.dist(dmat[cluster == i, cluster == i])
+    within.cluster.ss <- within.cluster.ss + sum(di^2)/cluster.size
+  }
+  within.cluster.ss
+}
+
+# TSS para k-means
+tss_km <- km_train$tot.withinss
+
+# TSS para jerárquico
+tss_h <- getTSS(h_dist_matrix, h_red_train$cluster)
+
+# TSS para densidad
+tss_d <- getTSS(d_dist_matrix, db$cluster)
+
+```
+
+
 
 ## Interpretación de los datos
 
