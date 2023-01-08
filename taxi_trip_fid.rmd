@@ -659,17 +659,7 @@ predicted_rf <- predict(model_rf,
 postResample(predicted_rf, test_set$trip_duration)
 ```
 
-Después de analizar los distintos modelos se llega a la conclusión de que el mejor modelo para este conjunto de datos es la regresión lineal utilizando la distancia Manhattan.
-
-```{r}
-
-# eliminación de variables usadas en supervisado
-rm(list = ls())
-
-# recarga de datos
-train <- read.csv("datos/train.csv")
-
-```
+Después de analizar los distintos modelos, se llega a la conclusión de que el mejor modelo para este conjunto de datos es la regresión lineal utilizando la distancia Manhattan.
 
 # No supervisado
 
@@ -681,9 +671,15 @@ La fase de preprocesamiento implica la modificación y limpieza de datos para qu
 
 Se añade una columna en el dataset que represente la distancia entre el punto de recogida y el de llegada. Para ello, se usará la función de distancia Harvesine, una fórmula matemática utilizada para calcular la distancia en una superficie esférica (en este caso de la tierra) entre dos puntos geográficos (punto de recogida y punto de llegada). Estos datos vienen dados en metros.
 
-Se ha decidido usar esta distancia porque mide distancias rectilíneas de forma similar a la euclídea (al menos para una superficie esférica como es el planeta Tierra), y esta distancia supuso la variable más importante en el apartado "*Preprocesamiento*".
+Se ha decidido usar esta distancia porque mide distancias rectilíneas de forma similar a la euclídea (al menos para una superficie esférica como es el planeta Tierra), y esta distancia supuso la variable más importante en el apartado "*Preprocesamiento supervisado*".
 
 ```{r}
+
+# eliminación de variables usadas en supervisado
+rm(list = ls())
+
+# recarga de datos
+train <- read.csv("datos/train.csv")
 
 # calcular distancia Harversine
 train <- train %>%
@@ -795,7 +791,7 @@ rm(max_dist, lim_max_dist, min_dist, lim_min_dist, lim_dist)
 
 ### Normalización de los datos
 
-Para que los datos dispongan de una distribución similar y estén en la misma escala se precisa realizar la normalización. Esta transformará tanto la duración como la distancia entre un **intervalo [0, 1]**.
+Para que los datos dispongan de una distribución similar y estén en la misma escala se precisa realizar la normalización. Esta transformará tanto la duración como la distancia en un **intervalo [0, 1]**.
 
 ```{r}
 
@@ -812,7 +808,9 @@ head(train)
 
 ### Representación de datos
 
-Una vez se ha aplicado las distintas técnicas de transformación al dataset, se va a representar para identificar a simple vista si existen algunos datos incongruentes. Tras el análisis visual, se puede concretar que el dataset se encuentra preparado para su uso en el proceso de Data Mining.
+Una vez se ha aplicado las distintas técnicas de preprocesamiento al dataset, se va a representar para identificar a simple vista si existen algunos datos incongruentes.
+
+Tras el análisis visual, se puede concretar que el dataset se encuentra preparado para su uso en Data Mining.
 
 ```{r}
 
@@ -828,7 +826,9 @@ rm(temp_train)
 
 ## Data Mining: Clustering
 
-Data Mining es el proceso de explorar y analizar grandes conjuntos de datos con el fin de descubrir patrones y relaciones ocultos. Dentro de este proceso, existen las técnicas de clustering, que son aquellas que se utilizan para agrupar datos similares en "clusters", conjuntos o grupos.
+Data Mining es el proceso de explorar y analizar grandes conjuntos de datos con el fin de descubrir patrones y relaciones ocultas.
+
+Dentro de este proceso, existen las técnicas de clustering, que son aquellas que se utilizan para agrupar datos similares en "clusters", conjuntos o grupos.
 
 En este caso, se va a aplicar clustering para identificar los distintos tipos de trayecto en función de la distancia y de la duración.
 
@@ -904,7 +904,7 @@ nrow(train)
 
 ```
 
-Dado que existen 1445848 elementos en el dataset, se va a reducir este número para crear una matriz de distancias que pueda ser analizada computacionalmente a día de hoy. Para ello, se ha extraido 20000 elementos de forma aleatoria del dataset para llevar a cabo esta tarea.
+Dado que existen 1445848 elementos en el dataset, se va a reducir este número para crear una matriz de distancias que pueda ser analizada computacionalmente a día de hoy. Para ello, se ha extraído 20000 elementos de forma aleatoria del dataset para llevar a cabo esta tarea.
 
 ```{r}
 
@@ -964,10 +964,9 @@ Nota: esta función puede tardar varios minutos.
 
 ```{r eval=FALSE}
 
-# representa WSS - K (nº de clusters)
+# representa TSS - K (nº de clusters)
 # computacionalmente complejo -> ~5 min
 fviz_nbclust(red_train, FUN = hcut, method = "wss")
-abline(h = .008, col = "red")
 
 ```
 
@@ -1003,9 +1002,7 @@ ggplot(h_red_train, aes(x = distance, y = trip_duration, color = factor(cluster)
 
 ### Clustering basado en densidad
 
-1.  **Matriz de distancias**
-
-Se obtiene la matriz de distancias de la misma forma que se realiza en el clustering jerárquico.
+1.  **Matriz de distancias:** se obtiene la matriz de distancias de la misma forma que se realiza en el clustering jerárquico.
 
 ```{r}
 
@@ -1028,7 +1025,7 @@ format(object.size(d_dist_matrix), units = "GB")
 
 ```
 
-2.  **Obtener EPS** Mediante la función kNNdist se puede determinar el EPS que se va a utilizar.
+2.  **Obtener EPS:** mediante la función kNNdist se puede determinar el EPS que se va a utilizar.
 
 ```{r}
 
@@ -1046,7 +1043,7 @@ rm(knn_dist)
 
 ```
 
-3.  **Aplicar función dbscan** Se aplica la función dbscan para categorizar en los diferentes clusters.
+3.  **Aplicar función dbscan**: se aplica la función dbscan para categorizar en los diferentes clusters.
 
 ```{r}
 
@@ -1063,7 +1060,7 @@ rm(n_dataset, eps, min_pts)
 db
 ```
 
-4.  **Representación de clusters** Se representan los diferentes clústeres extraídos mediante densidad.
+4.  **Representación de clusters:** se representan los diferentes clústeres extraídos mediante densidad.
 
 ```{r}
 
@@ -1114,7 +1111,7 @@ tss_d <- getTSS(d_dist_matrix, db$cluster)
 
 ## Interpretación de los datos
 
-Como hemos visto en los algoritmos anteriores, el número óptimo de clusteres que podemos crear son entorno a 3 y 4. Estos numeros son correctos, ya que coinciden con los que estabamos buscando.
+Como hemos visto en los algoritmos anteriores, el número óptimo de clústeres que podemos crear son entorno a 3 y 4. Estos números son correctos, ya que coinciden con los que estabamos buscando.
 
 Nos quedamos con un cluster de 3. Así tenemos un cluster para los viajes rápidos, medios y lentos respecto a la distancia y tiempo del recorrido de los diferentes taxis de Nueva York.
 
