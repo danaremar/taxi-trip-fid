@@ -659,7 +659,7 @@ predicted_rf <- predict(model_rf,
 postResample(predicted_rf, test_set$trip_duration)
 ```
 
-Después de analizar los distintos modelos, se llega a la conclusión de que el mejor modelo para este conjunto de datos es la regresión lineal utilizando la distancia Manhattan.
+Después de analizar los distintos modelos, se llega a la conclusión de que el mejor modelo para este conjunto de datos es **Random Forest**.
 
 # No supervisado
 
