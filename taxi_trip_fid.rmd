@@ -17,29 +17,31 @@ Los pasajeros pueden solicitar un taxi en la calle, a través de una aplicación
 
 A continuación, se va a analizar el dataset "train" sobre los trayectos de taxis que incluirá los siguientes datos:
 
--   *id*: identifica a cada viaje
+-   `id`: identifica a cada viaje
 
--   *vendor_id*: identifica al proveedor que ofrece el servicio
+-   `vendor_id`: identifica al proveedor que ofrece el servicio
 
--   *pickup_datetime*: fecha y hora de recogida
+-   `pickup_datetime`: fecha y hora de recogida
 
--   *dropoff_datetime*: fecha y hora de llegada
+-   `dropoff_datetime`: fecha y hora de llegada
 
--   *passenger_count*: número de pasajeros (incluyendo el conductor)
+-   `passenger_count`: número de pasajeros (incluyendo el conductor)
 
--   *pickup_longitude*: longitud donde el pasajero es recogido
+-   `pickup_longitude`: longitud donde el pasajero es recogido
 
--   *pickup_latitude*: latitud donde el pasajero es recogido
+-   `pickup_latitude`: latitud donde el pasajero es recogido
 
--   *dropoff_longitude*: longitud donde el pasajero termina el trayecto
+-   `dropoff_longitude`: longitud donde el pasajero termina el trayecto
 
--   *dropoff_latitude*: latitud donde el pasajero termina el trayecto
+-   `dropoff_latitude`: latitud donde el pasajero termina el trayecto
 
--   *store_and_fwd_flag*: indica si ha perdido la conexión con el servidor y se ha almacenado localmente
+-   `store_and_fwd_flag`: indica si ha perdido la conexión con el servidor y se ha almacenado localmente
 
--   *trip_duration*: duración del viaje en segundos
+-   `trip_duration`: duración del viaje en segundos
 
-Este análisis del dataset de taxis de Nueva York se centrará en examinar las tendencias y patrones en el uso de los taxis en la ciudad. A través del análisis de datos como la ubicación y el tiempo de viaje, se espera obtener una mejor comprensión de cómo se utilizan los taxis en Nueva York y cómo pueden ser mejorados y optimizados para satisfacer las necesidades de los pasajeros y conductores.
+Este análisis del dataset de taxis de Nueva York se centrará en examinar las tendencias y patrones en el uso de los taxis en la ciudad. A través del análisis de datos como la ubicación y el tiempo de viaje, se espera obtener una mejor comprensión de cómo se utilizan los taxis en Nueva York.
+
+Entrenaremos modelos que permitirán realizar predicciones o clasificaciones de los distintos trayectos.
 
 ```{r}
 
@@ -64,7 +66,7 @@ library(randomForest)
 
 ## Obtención de datos
 
-Este análisis del dataset de taxis de Nueva York se basa en datos extraídos de la plataforma [Kaggle](https://www.kaggle.com/competitions/nyc-taxi-trip-duration/data) en la sección de competiciones. Estos datos han sido descargados y tratados de forma local. Para ello se almacenan en la variable/dataset de R "train".
+Este análisis del dataset de taxis de Nueva York se basa en datos extraídos de la plataforma [Kaggle](https://www.kaggle.com/competitions/nyc-taxi-trip-duration/data) en la sección de competiciones. Estos datos han sido descargados y tratados de forma local. Para ello se almacenan en la variable/dataset de R "*train*".
 
 ```{r}
 
@@ -87,7 +89,7 @@ summary(train)
 
 Empezaremos visualizando cada una de las variables presentes en nuestro dataset, posteriormente realizaremos un preprocesamiento.
 
-Comenzaremos con vendor_id, esta variable indica el conductor que realizó el trayecto.
+Comenzaremos con `vendor_id`, esta variable indica el conductor que realizó el trayecto.
 
 Se puede observar que el taxista 2 dispone de más trayectos que el 1, pero la diferencia es insignificado en comparación a la cantidad de datos existentes.
 
@@ -100,20 +102,20 @@ train %>%
   labs(x = "Taxista", y = "Cantidad de trayectos realizados")
 ```
 
-Continuamos con passenger_count, que indica la cantidad de personas que montaron en el taxi.
+Continuamos con `passenger_count`, que indica la cantidad de personas que se montaron en el taxi.
 
-Se puede observamos que la mayoría de trayectos unicamente transportaban una persona.
+Se puede observar que la mayoría de trayectos únicamente transportaban una persona.
 
 ```{r}
 train %>%
   ggplot(aes(passenger_count)) +
   geom_bar(fill = "#FF6666") +
-  labs(x = "Pasajeros", y = "Cantidad de trayectos realizados")
+  labs(x = "Número de pasajeros", y = "Cantidad de trayectos realizados")
 ```
 
-Ahora analizaremos la variable store_and_fwd_flag.
+Ahora analizaremos la variable `store_and_fwd_flag`.
 
-La mayoría de los registros disponen de valor N, por tanto lo más probable es que esta columna sea eliminada ya que no aporta información al problema.
+La mayoría de los registros disponen de valor *N*, por tanto lo más probable es que esta columna sea eliminada ya que no aporta información al problema.
 
 ```{r}
 train %>% 
@@ -122,11 +124,11 @@ train %>%
     labs(x = "Store and FWD Flash", y = "Cantidad de trayectos realizados")
 ```
 
-En cuanto a las fechas y horas disponibles en nuestro dataset, vamos a trabajar solo sobre pickup_time ya que es la que aporta mayor información al problema.
+En cuanto a las fechas y horas disponibles en nuestro dataset, vamos a trabajar solo sobre `pickup_time` ya que es la que aporta mayor información al problema.
 
 Vamos a observaremos la distribución de los trayectos respecto a los meses, las horas y los días de la semana.
 
-Nos podemos dar cuenta que nuestro dataset unicamente contiene viajes realizados entre enero y junio.
+Nos podemos dar cuenta que nuestro dataset únicamente contiene viajes realizados entre enero y junio.
 
 Con estas tres gráficas se puede observar como en las horas de madrugada la cantidad de viajes baja, y en fin de semana el número sube.
 
@@ -136,8 +138,8 @@ count_month <- train %>%
   group_by(month_pick) %>%
   count() %>%
   ggplot(aes(month_pick, n)) +
-  geom_line(linewidth = 1.5, color = "#FF6666") +
-  geom_point(linewidth = 3) + 
+  geom_line(size = 1.5, color = "#FF6666") +
+  geom_point(size = 3) + 
   labs(x = "Meses", y = "Cantidad de trayectos realizados")
 
 count_hour <- train %>%
@@ -145,8 +147,8 @@ count_hour <- train %>%
   group_by(hour_pick) %>%
   count() %>%
   ggplot(aes(hour_pick, n)) +
-  geom_line(linewidth = 1.5, color = "blue") +
-  geom_point(linewidth = 3) + 
+  geom_line(size = 1.5, color = "blue") +
+  geom_point(size = 3) + 
   labs(x = "Horas", y = "Cantidad de trayectos realizados")
 
 count_wday <- train %>%
@@ -154,16 +156,16 @@ count_wday <- train %>%
   group_by(week_day) %>%
   count() %>%
   ggplot(aes(week_day, n)) +
-  geom_line(linewidth = 1.5, color = "yellow") +
-  geom_point(linewidth = 3) + 
+  geom_line(size = 1.5, color = "yellow") +
+  geom_point(size = 3) + 
   labs(x = "Días de la semana", y = "Cantidad de trayectos realizados")
 
-grid.arrange(count_month, count_hour, count_wday, nrow = 2, ncol = 2)
+suppressWarnings(grid.arrange(count_month, count_hour, count_wday, nrow = 2, ncol = 2))
 
 rm(count_month, count_hour, count_wday)
 ```
 
-Continuando con la columna pickup_datetime, vamos a ver como evoluciona la cantidad de trayectos cada mes según las horas y los días de la semana.
+Continuando con la columna `pickup_datetime`. Se va a analizar cómo evoluciona la cantidad de trayectos cada mes según las horas y los días de la semana.
 
 ```{r}
 month_hour <- train %>%
@@ -191,7 +193,9 @@ rm(month_hour, hour_wday)
 
 Un campo importante a la hora de visualizar es la distancia que existe entre el punto de recogida y destino.
 
-Vamos a crear dos nuevas columnas que contengan esta información. Crearemos una con la distancia euclídea y otra con la manhattan, y compararemos los resultados
+Vamos a crear dos nuevas columnas que contengan esta información. Crearemos una con la distancia euclídea y otra con la manhattan, y compararemos los resultados.
+
+Los resultados de ambas distancias calculadas serán expresadas en metros.
 
 ```{r}
 
@@ -209,7 +213,7 @@ train <- train %>% mutate(distance_euclidean = euclidean(pickup_latitude, pickup
 head(train, 5)
 ```
 
-Si visualizamos ambas podemos ver que son muy similares, algo de esperar.
+Si visualizamos ambas, podemos ver que son muy similares, algo de esperar.
 
 Podemos apreciar que la mayoría de los trayectos tienen una distancia similar, aunque existen 2 puntos donde esta tendencia cambia.
 
@@ -226,12 +230,12 @@ distancia2 <- train %>%
   scale_x_log10() +
   labs(x = "Distancia Manhattan", y = "Trayectos realizados")
 
-grid.arrange(distancia1, distancia2, nrow=1)
+suppressWarnings(grid.arrange(distancia1, distancia2, nrow=1))
 
-rm(distancia1, distancia2)
+rm(degree_to_meters, distancia1, distancia2)
 ```
 
-Si visualizamos las coordenadas de las sitios de recogida podemos observer la siguiente gráfica.
+Tras la visualización de las coordenadas de las sitios de recogida podemos observer la siguiente gráfica.
 
 ```{r}
 train %>%
@@ -243,9 +247,11 @@ train %>%
 
 ```
 
-Para finalizar con este punto vamos a ver información sobre nuestra columna objetivo, trip_duration.
+Para finalizar este punto, vamos a ver información sobre nuestra columna objetivo del aprendizaje supervisado, `trip_duration`.
 
-Empezaremos viendo la distribución de las duraciones de los trayectos. Como se puede observar el resultado es muy simular a una campana de Gauss.
+Empezaremos viendo la distribución de las duraciones de los trayectos.
+
+Como se puede observar el resultado es muy simular a una campana de Gauss.
 
 ```{r}
 train %>%
@@ -255,7 +261,7 @@ train %>%
   labs(x = "Duración del trayecto", y = "Trayectos realizados")
 ```
 
-Ahora analizaremos la media y la mediana de la duración de los viajes diferenciando por vendor/taxista.
+Ahora analizaremos la media y la mediana de la duración de los viajes, diferenciando por vendor/taxista.
 
 Se puede observar que la mediana de ambos es muy similar.
 
@@ -281,11 +287,11 @@ rm(dur_vendor_1, dur_vendor_2)
 
 Ahora visualizaremos la mediana de las duraciones de los viajes según el número de pasajeros.
 
-La primera gráfica nos muestra un número muy alto de duración de los viajes cuando el número de pasajeros en 0, y muy bajo cuando es 7, 8 y 9.
+La primera gráfica nos muestra un número muy alto de duración de los viajes cuando el número de pasajeros es 0, y muy bajo cuando es 7, 8 y 9.
 
-Si miramos la siguiente tabla podemos ver que justamente esos casos disponen de muy pocos registros en el dataset y por tanto se pueden considerar como datos no válidos (posiblemente sean errores).
+Si miramos la siguiente tabla, podemos ver que justamente esos casos disponen de muy pocos registros en el dataset y por tanto se pueden considerar como datos no válidos (posiblemente sean errores).
 
-Si ignoramos esa columna vemos que la duración de los trayectos respecto a la cantidad de pasajeros es parecido.
+Si ignoramos esa columna vemos que la duración de los trayectos respecto a la cantidad de pasajeros son parecidas.
 
 ```{r}
 train %>%
@@ -300,9 +306,9 @@ train %>%
   count()
 ```
 
-Continuamos con pickup_datetime. Vamos a ver como evoluciona la duración de los viajes según los meses, las horas, y los días de la semana.
+Continuamos con `pickup_datetime`. Vamos a ver como evoluciona la duración de los viajes según los meses, las horas, y los días de la semana.
 
-Aunque se observen picos la diferencia entre los valores es mínima.
+Aunque se observen picos, la diferencia entre los valores es mínima.
 
 ```{r}
 dur_month <- train %>%
@@ -337,11 +343,11 @@ grid.arrange(dur_month, dur_hour, dur_wday, ncol = 2)
 rm(dur_month, dur_hour, dur_wday)
 ```
 
-Para concluir con este apartado vamos a ver la distribución de las distancias respecto a la duración de los trayectos.
+Para concluir este apartado, se va a indicar la distribución de las distancias respecto a la duración de los trayectos.
 
 Como se puede observar, ambas distancias generan una gráfica muy simular.
 
-Por tanto, no podemos decidir a simple vista que distancia mejorará los resultados de nuestra preducción.
+Por tanto, no podemos decidir a simple vista que distancia mejorarán los resultados de nuestra predicción en el aprendizaje supervisado.
 
 ```{r}
 set.seed(2)
@@ -366,11 +372,13 @@ grid.arrange(dist_dur_1, dist_dur_2, ncol=2)
 rm(dist_dur_1, dist_dur_2)
 ```
 
-# Preprocesamiento
+# Supervisado
+
+## Preprocesamiento
 
 Tras haber visualizado los datos podemos hacernos una idea de que datos debemos modificar/ajustar en nuestro dataset.
 
-Aun así comenzaremos viendo un resumen del dataset.
+Aun así, comenzaremos viendo un resumen del dataset.
 
 ```{r}
 summary(train)
@@ -406,7 +414,7 @@ train <- train %>% mutate(week_day = wday(pickup_datetime, week_start = 1))
 train <- train %>% select(-pickup_datetime)
 ```
 
-La columna `passenger_count` se encuentra en formato númerico. Tal y como visualizamos en el anterior punto existian valores "raros" en esta columna.
+La columna `passenger_count` se encuentra en formato númerico. Tal y como visualizamos en el anterior punto existían valores "*raros*" en esta columna.
 
 Vamos a eliminar todos los registros con `passenger_count` igual a 0, 7, 8 y 9.
 
@@ -416,7 +424,7 @@ train <- train %>% filter(passenger_count != 0 & passenger_count != 7 & passenge
 
 Las columnas `pickup_*` y `dropoff_*` continen las coordenadas. En el apartado anterior de visualización creamos dos columnas nuevas para mostrar la distancia entre el lugar de recogida y el destino.
 
-Por tanto, estas dos columnas no van a ser utilizas por lo que procedemos a borrarlas.
+Estas dos columnas no van a ser utilizas, por lo que procedemos a borrarlas.
 
 ```{r}
 train <- train %>% select(-pickup_latitude)
@@ -425,13 +433,13 @@ train <- train %>% select(-dropoff_latitude)
 train <- train %>% select(-dropoff_longitude)
 ```
 
-Sin embargo, las dos columnas que creamos anteriormente presentan registros con distancias igual a 0. Estas deben tratarse de errores por lo que procedemos con su eliminación.
+Sin embargo, las dos columnas que creamos anteriormente presentan registros con distancias igual a 0. Estas deben tratarse de errores, por lo que procedemos con su eliminación.
 
 ```{r}
 train <- train %>% filter(distance_euclidean != 0 & distance_manhattan != 0)
 ```
 
-Continuando con la última variable, como hemos pudimos observar tanto en la visualización como con la función summary, la columna `store_and_fwd_flag` dispone de muy pocos valores de tipo Y, y por tanto no nos aporta información.
+Continuando con la última variable. Como hemos podido observar tanto en la visualización como con la función summary, la columna `store_and_fwd_flag` dispone de muy pocos valores de tipo Y, y por tanto no nos aporta información.
 
 Procedemos a borrarla.
 
@@ -439,7 +447,7 @@ Procedemos a borrarla.
 train <- train %>% select(-store_and_fwd_flag)
 ```
 
-Para finalizar este apartado de preprocesamiento realizaremos un normalizado de nuestras columnas para que tengan un valor comprendido entre 0 y 1.
+Para finalizar este apartado, se realizará un normalizado las columnas para que tengan un valor comprendido entre 0 y 1.
 
 ```{r}
 range_model <- preProcess(train, method = "range")
@@ -447,13 +455,13 @@ train <- predict(range_model, newdata = train)
 rm(range_model)
 ```
 
-# Supervisado
-
 ## Predicción
 
-## División del conjunto
+El objetivo de la predicción en este dataset de taxis es predecir la duración de un viaje en función de todas las variables disponibles.
 
-El primer paso es eliminar valores de nuestro dataset ya que debido a la cantidad de registros no es posible su computación.
+### División del conjunto
+
+El primer paso es eliminar valores de nuestro dataset, ya que debido a la cantidad de registros no es posible su computación.
 
 ```{r}
 set.seed(123)
@@ -462,7 +470,7 @@ train <- train[ind,]
 rm(ind)
 ```
 
-Ahora dividiremos nuestro conjunto en train y test.
+Ahora dividiremos nuestro conjunto en *train* y *test*.
 
 ```{r}
 set.seed(456)
@@ -472,9 +480,11 @@ test_set <- train[-ind,]
 rm(ind)
 ```
 
-## Importancia de las variables
+### Importancia de las variables
 
-Vamos a realizar un entrenamiento mediante Random Forest para observar cuales son las variables más importantes en nuestro dataset.
+Vamos a realizar un entrenamiento mediante *Random Forest* para observar cuales son las variables más importantes en nuestro dataset.
+
+Este modelo creado también será usado posteriormente para realizar predicciones.
 
 Se observa que las distancias son las más importantes, superando la euclídea a la manhattan.
 
@@ -502,7 +512,7 @@ test_set_euclidean <- select(test_set, -distance_manhattan)
 test_set_manhattan <- select(test_set, -distance_euclidean)
 ```
 
-Ahora entrenamos el modelo con ambos datos de train:
+Ahora, entrenamos el modelo con ambos datos de train:
 
 ```{r}
 model_lm_euclidean <- train(trip_duration ~ ., 
@@ -573,7 +583,7 @@ resam <- resamples(list(EUC = model_lm_euclidean_ctrl,
 summary(resam)
 ```
 
-Con el ajuste de los hiperparámetros podemos ver como la distancia manhattan ha mejorado respecto a la euclídea.
+Con el ajuste de los hiperparámetros, podemos ver como la distancia manhattan ha mejorado respecto a la euclídea.
 
 Procedemos a entrenar el modelo utilizando XGBoost
 
@@ -630,7 +640,7 @@ Se puede observar que los resultados obtenidos son peores que con la regresión 
 
 Después de varias pruebas ajustando los hiperparámetros, y utilizando validación cruzada, esos hiperparámetros son los que mejor resultado aportan.
 
-Para terminar con este modelo vamos a mostar una gráfica de la importancia que han tenido las distintas variables.
+Para terminar con este modelo, vamos a mostrar una gráfica sobre la importancia que han tenido las distintas variables.
 
 ```{r}
 xgb_imp_freq <- xgb.importance(feature_names = colnames(train_matrix), 
@@ -663,9 +673,9 @@ train <- read.csv("datos/train.csv")
 
 # No supervisado
 
-## Transformación de datos
+## Preprocesamiento
 
-La fase de transformación implica la modificación y limpieza de datos para que puedan ser utilizados posteriormente por el proceso DM (Data Mining) adaptándose al proceso de .
+La fase de preprocesamiento implica la modificación y limpieza de datos para que puedan ser utilizados posteriormente para la clasificación mediante técnicas de clustering.
 
 ### Cálculo de distancia
 
